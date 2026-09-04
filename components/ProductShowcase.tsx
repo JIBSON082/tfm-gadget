@@ -80,24 +80,45 @@ function Row({ item }: { item: ShowcaseItem }) {
         viewport={{ once: true, margin: "-20% 0px" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
-        <span
+        <motion.span
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
           style={{
             color: "var(--accent)",
             fontSize: 13,
             fontWeight: 500,
+            textShadow: "0 0 12px rgba(61,217,255,0.5)",
           }}
         >
           {item.eyebrow}
-        </span>
+        </motion.span>
         <h3
           style={{
             fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
             marginTop: 10,
             marginBottom: 14,
             color: "var(--text-primary)",
+            overflow: "hidden",
           }}
         >
-          {item.title}
+          {item.title.split(" ").map((word, i) => (
+            <motion.span
+              key={i}
+              initial={{ y: "110%", opacity: 0 }}
+              whileInView={{ y: "0%", opacity: 1 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{
+                duration: 0.6,
+                delay: 0.1 + i * 0.045,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              style={{ display: "inline-block", marginRight: "0.25em" }}
+            >
+              {word}
+            </motion.span>
+          ))}
         </h3>
         <p
           style={{
@@ -122,12 +143,14 @@ function Row({ item }: { item: ShowcaseItem }) {
           position: "relative",
         }}
       >
-        <div
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
           style={{
             maskImage:
-              "radial-gradient(ellipse 75% 75% at center, black 55%, transparent 100%)",
+              "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
             WebkitMaskImage:
-              "radial-gradient(ellipse 75% 75% at center, black 55%, transparent 100%)",
+              "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
           }}
         >
           <Image
@@ -137,7 +160,7 @@ function Row({ item }: { item: ShowcaseItem }) {
             height={500}
             style={{ width: "100%", height: "auto", display: "block" }}
           />
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );
