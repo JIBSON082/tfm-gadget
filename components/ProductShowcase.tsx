@@ -10,7 +10,6 @@ interface ShowcaseItem {
   title: string;
   copy: string;
   fromX: number;
-  imageFirst: boolean;
 }
 
 const items: ShowcaseItem[] = [
@@ -21,8 +20,7 @@ const items: ShowcaseItem[] = [
     eyebrow: "Earbuds",
     title: "Sound that fits your pocket, and your budget",
     copy: "From everyday buds to noise-cancelling picks — tell us what you want to spend, we'll show you what's real.",
-    fromX: -80,
-    imageFirst: true,
+    fromX: 60,
   },
   {
     image:
@@ -31,8 +29,7 @@ const items: ShowcaseItem[] = [
     eyebrow: "Headphones",
     title: "Studio sound, street price",
     copy: "JBL, Bose, and more — over-ear comfort without the over-the-top markup.",
-    fromX: 80,
-    imageFirst: false,
+    fromX: 60,
   },
   {
     image:
@@ -41,8 +38,7 @@ const items: ShowcaseItem[] = [
     eyebrow: "Speakers",
     title: "Turn it up, without turning out your wallet",
     copy: "Portable speakers built for the party, priced for the plug.",
-    fromX: -80,
-    imageFirst: true,
+    fromX: 60,
   },
   {
     image:
@@ -51,8 +47,7 @@ const items: ShowcaseItem[] = [
     eyebrow: "Chargers & Cables",
     title: "The small stuff, sorted",
     copy: "Cables, heads, and everyday essentials — the things you always need and never want to overpay for.",
-    fromX: 80,
-    imageFirst: false,
+    fromX: 60,
   },
   {
     image:
@@ -61,86 +56,89 @@ const items: ShowcaseItem[] = [
     eyebrow: "Smartwatches",
     title: "Track everything. Overspend on nothing.",
     copy: "Itel, Oraimo, and more — smart features at a price that actually makes sense.",
-    fromX: -80,
-    imageFirst: true,
+    fromX: 60,
   },
 ];
 
 function Row({ item }: { item: ShowcaseItem }) {
-  const textBlock = (
-    <motion.div
-      initial={{ opacity: 0, x: item.fromX * -1, filter: "blur(6px)" }}
-      whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-15% 0px" }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      style={{ flex: 1, minWidth: 280 }}
-    >
-      <span
-        style={{
-          color: "var(--accent)",
-          fontSize: 13,
-          fontWeight: 500,
-        }}
-      >
-        {item.eyebrow}
-      </span>
-      <h3
-        style={{
-          fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
-          marginTop: 10,
-          marginBottom: 14,
-          color: "var(--text-primary)",
-        }}
-      >
-        {item.title}
-      </h3>
-      <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.7, maxWidth: 420 }}>
-        {item.copy}
-      </p>
-    </motion.div>
-  );
-
-  const imageBlock = (
-    <motion.div
-      initial={{ opacity: 0, x: item.fromX, scale: 0.92 }}
-      whileInView={{ opacity: 1, x: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-15% 0px" }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      style={{ flex: 1, minWidth: 280, display: "flex", justifyContent: "center" }}
-    >
-      <Image
-        src={item.image}
-        alt={item.alt}
-        width={500}
-        height={500}
-        style={{ width: "min(360px, 70vw)", height: "auto" }}
-      />
-    </motion.div>
-  );
-
   return (
     <div
       style={{
         display: "flex",
-        flexWrap: "wrap",
+        flexDirection: "column",
         alignItems: "center",
-        gap: 48,
-        padding: "80px 24px",
-        maxWidth: 1100,
+        gap: 32,
+        padding: "100px 24px",
+        maxWidth: 720,
         margin: "0 auto",
+        textAlign: "center",
       }}
     >
-      {item.imageFirst ? (
-        <>
-          {imageBlock}
-          {textBlock}
-        </>
-      ) : (
-        <>
-          {textBlock}
-          {imageBlock}
-        </>
-      )}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-20% 0px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <span
+          style={{
+            color: "var(--accent)",
+            fontSize: 13,
+            fontWeight: 500,
+          }}
+        >
+          {item.eyebrow}
+        </span>
+        <h3
+          style={{
+            fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
+            marginTop: 10,
+            marginBottom: 14,
+            color: "var(--text-primary)",
+          }}
+        >
+          {item.title}
+        </h3>
+        <p
+          style={{
+            color: "var(--text-muted)",
+            fontSize: 16,
+            lineHeight: 1.7,
+            maxWidth: 420,
+            marginInline: "auto",
+          }}
+        >
+          {item.copy}
+        </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.94 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-15% 0px" }}
+        transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          width: "min(380px, 78vw)",
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            maskImage:
+              "radial-gradient(ellipse 75% 75% at center, black 55%, transparent 100%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 75% 75% at center, black 55%, transparent 100%)",
+          }}
+        >
+          <Image
+            src={item.image}
+            alt={item.alt}
+            width={500}
+            height={500}
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
+      </motion.div>
     </div>
   );
 }
