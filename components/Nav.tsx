@@ -28,17 +28,24 @@ export default function Nav() {
           padding: "20px 24px",
         }}
       >
-        <span
+        <motion.span
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 700,
             fontSize: 20,
             letterSpacing: "-0.02em",
-            color: "var(--text-primary)",
+            backgroundImage:
+              "linear-gradient(90deg, var(--text-primary) 0%, var(--text-primary) 35%, var(--accent) 50%, var(--text-primary) 65%, var(--text-primary) 100%)",
+            backgroundSize: "250% 100%",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
           }}
+          animate={{ backgroundPosition: ["200% 0%", "-50% 0%"] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
         >
-          TFM<span style={{ color: "var(--accent)" }}>.</span>
-        </span>
+          TFM.
+        </motion.span>
 
         <button
           aria-label="Menu"
