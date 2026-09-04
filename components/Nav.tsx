@@ -32,14 +32,16 @@ export default function Nav() {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 700,
-            fontSize: 20,
+            fontSize: 28,
             letterSpacing: "-0.02em",
             backgroundImage:
-              "linear-gradient(90deg, var(--text-primary) 0%, var(--text-primary) 35%, var(--accent) 50%, var(--text-primary) 65%, var(--text-primary) 100%)",
+              "linear-gradient(90deg, var(--text-primary) 0%, var(--text-primary) 30%, var(--accent) 50%, var(--text-primary) 70%, var(--text-primary) 100%)",
             backgroundSize: "250% 100%",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             color: "transparent",
+            filter:
+              "drop-shadow(0 0 6px rgba(61,217,255,0.55)) drop-shadow(0 0 16px rgba(61,217,255,0.3))",
           }}
           animate={{ backgroundPosition: ["200% 0%", "-50% 0%"] }}
           transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
@@ -55,20 +57,22 @@ export default function Nav() {
             border: "none",
             display: "flex",
             flexDirection: "column",
-            gap: 5,
-            padding: 8,
+            gap: 6,
+            padding: 10,
           }}
         >
-          <span style={{ width: 22, height: 2, background: "var(--text-primary)" }} />
-          <span style={{ width: 22, height: 2, background: "var(--text-primary)" }} />
+          <span style={{ width: 30, height: 2.5, background: "var(--text-primary)" }} />
+          <span style={{ width: 30, height: 2.5, background: "var(--text-primary)" }} />
+          <span style={{ width: 30, height: 2.5, background: "var(--text-primary)" }} />
         </button>
       </header>
 
       {open && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           style={{
             position: "fixed",
             inset: 0,
@@ -98,11 +102,18 @@ export default function Nav() {
             ×
           </button>
 
-          {links.map((link) => (
-            <a
+          {links.map((link, i) => (
+            <motion.a
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.1 + i * 0.08,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: 28,
@@ -110,7 +121,7 @@ export default function Nav() {
               }}
             >
               {link.label}
-            </a>
+            </motion.a>
           ))}
         </motion.div>
       )}
