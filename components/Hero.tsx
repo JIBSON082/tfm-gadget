@@ -58,21 +58,51 @@ export default function Hero() {
         Lagos's best plug
       </motion.p>
 
-      <motion.h1
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.2 }}
+      <div
         style={{
           fontSize: "clamp(2.2rem, 6vw, 4.2rem)",
           textAlign: "center",
           maxWidth: 780,
           color: "var(--text-primary)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          letterSpacing: "-0.02em",
+          lineHeight: 1.1,
+          overflow: "hidden",
         }}
       >
-        Name your price.
+        {["Name", "your", "price."].map((word, i) => (
+          <motion.span
+            key={word}
+            initial={{ y: "110%", opacity: 0 }}
+            animate={{ y: "0%", opacity: 1 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.15 + i * 0.08,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            style={{ display: "inline-block", marginRight: "0.28em" }}
+          >
+            {word}
+          </motion.span>
+        ))}
         <br />
-        Get your gadget.
-      </motion.h1>
+        {["Get", "your", "gadget."].map((word, i) => (
+          <motion.span
+            key={word}
+            initial={{ y: "110%", opacity: 0 }}
+            animate={{ y: "0%", opacity: 1 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.45 + i * 0.08,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            style={{ display: "inline-block", marginRight: "0.28em" }}
+          >
+            {word}
+          </motion.span>
+        ))}
+      </div>
 
       <motion.p
         initial={{ opacity: 0, y: 12 }}
@@ -104,12 +134,14 @@ export default function Hero() {
           position: "relative",
         }}
       >
-        <div
+        <motion.div
+          animate={{ y: [0, -14, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           style={{
             maskImage:
-              "radial-gradient(ellipse 70% 70% at center, black 50%, transparent 100%)",
+              "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
             WebkitMaskImage:
-              "radial-gradient(ellipse 70% 70% at center, black 50%, transparent 100%)",
+              "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
           }}
         >
           <Image
@@ -120,7 +152,7 @@ export default function Hero() {
             priority
             style={{ width: "100%", height: "auto", display: "block" }}
           />
-        </div>
+        </motion.div>
       </motion.div>
 
       <motion.div style={{ opacity: textOpacity, marginTop: 8 }}>
