@@ -20,13 +20,13 @@ export default function Hero() {
     <section
       ref={ref}
       style={{
-        minHeight: "100vh",
+        minHeight: "92vh",
         position: "relative",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "0 24px",
+        padding: "100px 24px 40px",
         overflow: "hidden",
       }}
     >
@@ -104,14 +104,23 @@ export default function Hero() {
           position: "relative",
         }}
       >
-        <Image
-          src="https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_matte_black_power_bank_floating_at_a_dynamic_diagonal_angle_in_a_completely_da-3_w6nrkh.jpg"
-          alt="TFM power bank"
-          width={800}
-          height={800}
-          priority
-          style={{ width: "100%", height: "auto", display: "block" }}
-        />
+        <div
+          style={{
+            maskImage:
+              "radial-gradient(ellipse 70% 70% at center, black 50%, transparent 100%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 70% 70% at center, black 50%, transparent 100%)",
+          }}
+        >
+          <Image
+            src="https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_matte_black_power_bank_floating_at_a_dynamic_diagonal_angle_in_a_completely_da-3_w6nrkh.jpg"
+            alt="TFM power bank"
+            width={800}
+            height={800}
+            priority
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
       </motion.div>
 
       <motion.div style={{ opacity: textOpacity, marginTop: 8 }}>
