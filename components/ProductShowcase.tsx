@@ -78,9 +78,8 @@ function SplitWord({
       {words.map((word, i) => {
         const wStart = start + (i / words.length) * (end - start) * 0.6;
         const wEnd = wStart + 0.15;
-        const y = useTransform(progress, [wStart, wEnd], [60, 0]);
+        const y = useTransform(progress, [wStart, wEnd], [40, 0]);
         const opacity = useTransform(progress, [wStart, wEnd], [0, 1]);
-        const blur = useTransform(progress, [wStart, wEnd], [8, 0]);
         return (
           <motion.span
             key={i}
@@ -89,7 +88,6 @@ function SplitWord({
               marginRight: "0.25em",
               y,
               opacity,
-              filter: useTransform(blur, (b) => `blur(${b}px)`),
             }}
           >
             {word}
@@ -100,148 +98,120 @@ function SplitWord({
   );
 }
 
-// Scroll model, in one place, so the whole sequence is easy to reason about:
-//
-// Each row is a tall "scroll stage" (160vh) with its content pinned via
-// position:sticky while scrollYProgress runs 0 → 1 across that stage. This
-// gives the reveal real physical scroll distance to play out at normal
-// scroll speed — a fast flick no longer blows past the sequence.
-//
-// Within that 0 → 1 range:
-//   eyebrow   0.00 – 0.12   fades in
-//   title     0.12 – 0.32   words reveal in sequence (via SplitWord)
-//   copy      0.34 – 0.48   fades + slides up
-//   image     settles to a calm, fully-resolved resting state (0 rotation,
-//             scale 1, full opacity) at progress 0.5 — the exact midpoint —
-//             then eases back out toward the opposite rotation as the stage
-//             finishes, so it never gets stuck rotated at an extreme no
-//             matter which direction you're scrolling.
 function Row({ item }: { item: ShowcaseItem }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.95", "start 0.05"],
+    offset: ["start 0.85", "start 0.25"],
   });
 
   const rotate = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [item.spinDir * -22, 0, item.spinDir * 22]
+    [item.spinDir * -20, 0, item.spinDir * 20]
   );
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.82, 1, 0.82]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.88, 1, 0.88]);
   const skew = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [item.spinDir * 4, 0, item.spinDir * -4]
+    [item.spinDir * 3, 0, item.spinDir * -3]
   );
-  const imgOpacity = useTransform(
-    scrollYProgress,
-    [0.36, 0.5, 0.85, 1],
-    [0.15, 1, 1, 0.3]
-  );
-  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1.2, 0.6]);
+  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.7, 1.15, 0.7]);
 
-  const eyebrowOpacity = useTransform(scrollYProgress, [0, 0.12], [0, 1]);
-  const copyOpacity = useTransform(scrollYProgress, [0.34, 0.48], [0, 1]);
-  const copyY = useTransform(scrollYProgress, [0.34, 0.48], [30, 0]);
+  const eyebrowOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+  const copyOpacity = useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
+  const copyY = useTransform(scrollYProgress, [0.4, 0.6], [20, 0]);
 
   return (
-    <div ref={ref} style={{ minHeight: "160vh", position: "relative" }}>
-      <div
+    <div
+      ref={ref}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 16,
+        padding: "48px 24px",
+        maxWidth: 720,
+        margin: "0 auto",
+        textAlign: "center",
+      }}
+    >
+      <motion.span
         style={{
-          position: "sticky",
-          top: 0,
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 16,
-          padding: "48px 24px",
-          maxWidth: 720,
-          margin: "0 auto",
-          textAlign: "center",
+          color: "var(--accent)",
+          fontSize: 13,
+          fontWeight: 500,
+          textShadow: "0 0 12px rgba(61,217,255,0.5)",
+          opacity: eyebrowOpacity,
         }}
       >
-        <motion.span
-          style={{
-            color: "var(--accent)",
-            fontSize: 13,
-            fontWeight: 500,
-            textShadow: "0 0 12px rgba(61,217,255,0.5)",
-            opacity: eyebrowOpacity,
-          }}
-        >
-          {item.eyebrow}
-        </motion.span>
+        {item.eyebrow}
+      </motion.span>
 
-        <h3
-          style={{
-            fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
-            marginTop: 10,
-            marginBottom: 14,
-            color: "var(--text-primary)",
-            overflow: "hidden",
-          }}
-        >
-          <SplitWord text={item.title} progress={scrollYProgress} start={0.12} end={0.32} />
-        </h3>
+      <h3
+        style={{
+          fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
+          marginTop: 10,
+          marginBottom: 14,
+          color: "var(--text-primary)",
+          overflow: "hidden",
+        }}
+      >
+        <SplitWord text={item.title} progress={scrollYProgress} start={0.15} end={0.38} />
+      </h3>
 
-        <motion.p
-          style={{
-            color: "var(--text-muted)",
-            fontSize: 16,
-            lineHeight: 1.7,
-            maxWidth: 420,
-            marginInline: "auto",
-            opacity: copyOpacity,
-            y: copyY,
-          }}
-        >
-          {item.copy}
-        </motion.p>
+      <motion.p
+        style={{
+          color: "var(--text-muted)",
+          fontSize: 16,
+          lineHeight: 1.7,
+          maxWidth: 420,
+          marginInline: "auto",
+          opacity: copyOpacity,
+          y: copyY,
+        }}
+      >
+        {item.copy}
+      </motion.p>
 
-        <div
+      <div
+        style={{
+          width: "min(380px, 78vw)",
+          position: "relative",
+          marginTop: 12,
+        }}
+      >
+        <motion.div
           style={{
-            width: "min(380px, 78vw)",
+            position: "absolute",
+            inset: "-20%",
+            background:
+              "radial-gradient(circle, rgba(61,217,255,0.18) 0%, transparent 70%)",
+            scale: glowScale,
+            zIndex: 0,
+          }}
+        />
+        <motion.div
+          style={{
+            rotate,
+            scale,
+            skewX: skew,
+            maskImage:
+              "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
             position: "relative",
-            marginTop: 12,
+            zIndex: 1,
           }}
         >
-          {/* pulsing glow behind the image, scales with scroll for extra depth */}
-          <motion.div
-            style={{
-              position: "absolute",
-              inset: "-20%",
-              background:
-                "radial-gradient(circle, rgba(61,217,255,0.18) 0%, transparent 70%)",
-              scale: glowScale,
-              zIndex: 0,
-            }}
+          <Image
+            src={item.image}
+            alt={item.alt}
+            width={500}
+            height={500}
+            style={{ width: "100%", height: "auto", display: "block" }}
           />
-          <motion.div
-            style={{
-              rotate,
-              scale,
-              skewX: skew,
-              opacity: imgOpacity,
-              maskImage:
-                "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
-            <Image
-              src={item.image}
-              alt={item.alt}
-              width={500}
-              height={500}
-              style={{ width: "100%", height: "auto", display: "block" }}
-            />
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
