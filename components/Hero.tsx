@@ -122,9 +122,9 @@ export default function Hero() {
       </motion.p>
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.85 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, scale: 0.7, y: -120, rotate: -18, filter: "blur(14px)" }}
+        animate={{ opacity: 1, scale: 1, y: 0, rotate: 0, filter: "blur(0px)" }}
+        transition={{ duration: 1.1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
         style={{
           scale: imgScale,
           x: imgX,
