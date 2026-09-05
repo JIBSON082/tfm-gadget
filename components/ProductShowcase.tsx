@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
 
 interface ShowcaseItem {
@@ -9,7 +10,7 @@ interface ShowcaseItem {
   eyebrow: string;
   title: string;
   copy: string;
-  fromX: number;
+  spinDir: number;
 }
 
 const items: ShowcaseItem[] = [
@@ -20,7 +21,7 @@ const items: ShowcaseItem[] = [
     eyebrow: "Earbuds",
     title: "Sound that fits your pocket, and your budget",
     copy: "From everyday buds to noise-cancelling picks — tell us what you want to spend, we'll show you what's real.",
-    fromX: 60,
+    spinDir: 1,
   },
   {
     image:
@@ -29,7 +30,7 @@ const items: ShowcaseItem[] = [
     eyebrow: "Headphones",
     title: "Studio sound, street price",
     copy: "JBL, Bose, and more — over-ear comfort without the over-the-top markup.",
-    fromX: 60,
+    spinDir: -1,
   },
   {
     image:
@@ -38,7 +39,7 @@ const items: ShowcaseItem[] = [
     eyebrow: "Speakers",
     title: "Turn it up, without turning out your wallet",
     copy: "Portable speakers built for the party, priced for the plug.",
-    fromX: 60,
+    spinDir: 1,
   },
   {
     image:
@@ -47,7 +48,7 @@ const items: ShowcaseItem[] = [
     eyebrow: "Chargers & Cables",
     title: "The small stuff, sorted",
     copy: "Cables, heads, and everyday essentials — the things you always need and never want to overpay for.",
-    fromX: 60,
+    spinDir: -1,
   },
   {
     image:
@@ -56,13 +57,69 @@ const items: ShowcaseItem[] = [
     eyebrow: "Smartwatches",
     title: "Track everything. Overspend on nothing.",
     copy: "Itel, Oraimo, and more — smart features at a price that actually makes sense.",
-    fromX: 60,
+    spinDir: 1,
   },
 ];
 
+function SplitWord({
+  text,
+  progress,
+  start,
+  end,
+}: {
+  text: string;
+  progress: MotionValue<number>;
+  start: number;
+  end: number;
+}) {
+  const words = text.split(" ");
+  return (
+    <>
+      {words.map((word, i) => {
+        const wStart = start + (i / words.length) * (end - start) * 0.6;
+        const wEnd = wStart + 0.15;
+        const y = useTransform(progress, [wStart, wEnd], [60, 0]);
+        const opacity = useTransform(progress, [wStart, wEnd], [0, 1]);
+        const blur = useTransform(progress, [wStart, wEnd], [8, 0]);
+        return (
+          <motion.span
+            key={i}
+            style={{
+              display: "inline-block",
+              marginRight: "0.25em",
+              y,
+              opacity,
+              filter: useTransform(blur, (b) => `blur(${b}px)`),
+            }}
+          >
+            {word}
+          </motion.span>
+        );
+      })}
+    </>
+  );
+}
+
 function Row({ item }: { item: ShowcaseItem }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.9", "end 0.1"],
+  });
+
+  const rotate = useTransform(scrollYProgress, [0, 1], [item.spinDir * -35, item.spinDir * 35]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.75, 1.08, 0.75]);
+  const skew = useTransform(scrollYProgress, [0, 0.5, 1], [item.spinDir * 6, 0, item.spinDir * -6]);
+  const imgOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.2, 1, 1, 0.2]);
+  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1.3, 0.6]);
+
+  const eyebrowOpacity = useTransform(scrollYProgress, [0.05, 0.2], [0, 1]);
+  const copyOpacity = useTransform(scrollYProgress, [0.35, 0.55], [0, 1]);
+  const copyY = useTransform(scrollYProgress, [0.35, 0.55], [30, 0]);
+
   return (
     <div
+      ref={ref}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -74,83 +131,73 @@ function Row({ item }: { item: ShowcaseItem }) {
         textAlign: "center",
       }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-20% 0px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      <motion.span
+        style={{
+          color: "var(--accent)",
+          fontSize: 13,
+          fontWeight: 500,
+          textShadow: "0 0 12px rgba(61,217,255,0.5)",
+          opacity: eyebrowOpacity,
+        }}
       >
-        <motion.span
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          style={{
-            color: "var(--accent)",
-            fontSize: 13,
-            fontWeight: 500,
-            textShadow: "0 0 12px rgba(61,217,255,0.5)",
-          }}
-        >
-          {item.eyebrow}
-        </motion.span>
-        <h3
-          style={{
-            fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
-            marginTop: 10,
-            marginBottom: 14,
-            color: "var(--text-primary)",
-            overflow: "hidden",
-          }}
-        >
-          {item.title.split(" ").map((word, i) => (
-            <motion.span
-              key={i}
-              initial={{ y: "110%", opacity: 0 }}
-              whileInView={{ y: "0%", opacity: 1 }}
-              viewport={{ once: true, margin: "-10% 0px" }}
-              transition={{
-                duration: 0.6,
-                delay: 0.1 + i * 0.045,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              style={{ display: "inline-block", marginRight: "0.25em" }}
-            >
-              {word}
-            </motion.span>
-          ))}
-        </h3>
-        <p
-          style={{
-            color: "var(--text-muted)",
-            fontSize: 16,
-            lineHeight: 1.7,
-            maxWidth: 420,
-            marginInline: "auto",
-          }}
-        >
-          {item.copy}
-        </p>
-      </motion.div>
+        {item.eyebrow}
+      </motion.span>
 
-      <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.94 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: "-15% 0px" }}
-        transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+      <h3
+        style={{
+          fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
+          marginTop: 10,
+          marginBottom: 14,
+          color: "var(--text-primary)",
+          overflow: "hidden",
+        }}
+      >
+        <SplitWord text={item.title} progress={scrollYProgress} start={0.1} end={0.4} />
+      </h3>
+
+      <motion.p
+        style={{
+          color: "var(--text-muted)",
+          fontSize: 16,
+          lineHeight: 1.7,
+          maxWidth: 420,
+          marginInline: "auto",
+          opacity: copyOpacity,
+          y: copyY,
+        }}
+      >
+        {item.copy}
+      </motion.p>
+
+      <div
         style={{
           width: "min(380px, 78vw)",
           position: "relative",
+          marginTop: 12,
         }}
       >
         <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
           style={{
+            position: "absolute",
+            inset: "-20%",
+            background:
+              "radial-gradient(circle, rgba(61,217,255,0.18) 0%, transparent 70%)",
+            scale: glowScale,
+            zIndex: 0,
+          }}
+        />
+        <motion.div
+          style={{
+            rotate,
+            scale,
+            skewX: skew,
+            opacity: imgOpacity,
             maskImage:
               "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
             WebkitMaskImage:
               "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           <Image
@@ -161,7 +208,7 @@ function Row({ item }: { item: ShowcaseItem }) {
             style={{ width: "100%", height: "auto", display: "block" }}
           />
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }
