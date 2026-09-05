@@ -100,6 +100,22 @@ function SplitWord({
   );
 }
 
+// Scroll model, in one place, so the whole sequence is easy to reason about:
+//
+// Each row is a tall "scroll stage" (160vh) with its content pinned via
+// position:sticky while scrollYProgress runs 0 → 1 across that stage. This
+// gives the reveal real physical scroll distance to play out at normal
+// scroll speed — a fast flick no longer blows past the sequence.
+//
+// Within that 0 → 1 range:
+//   eyebrow   0.00 – 0.12   fades in
+//   title     0.12 – 0.32   words reveal in sequence (via SplitWord)
+//   copy      0.34 – 0.48   fades + slides up
+//   image     settles to a calm, fully-resolved resting state (0 rotation,
+//             scale 1, full opacity) at progress 0.5 — the exact midpoint —
+//             then eases back out toward the opposite rotation as the stage
+//             finishes, so it never gets stuck rotated at an extreme no
+//             matter which direction you're scrolling.
 function Row({ item }: { item: ShowcaseItem }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -107,13 +123,6 @@ function Row({ item }: { item: ShowcaseItem }) {
     offset: ["start 0.95", "start 0.05"],
   });
 
-  // Ordered reveal sequence — each stage fully completes before the next
-  // begins: eyebrow (0–0.12) → title (0.12–0.32) → copy (0.32–0.48) →
-  // image settles to a calm, fully-resolved resting state by 0.5, holds
-  // neutral through the middle of its visible time, then eases back out
-  // only as it approaches leaving the screen (0.85–1). This fixes the old
-  // bug where the image stayed clamped at a rotated extreme the whole time
-  // it was on screen instead of ever fully settling.
   const rotate = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
@@ -137,96 +146,102 @@ function Row({ item }: { item: ShowcaseItem }) {
   const copyY = useTransform(scrollYProgress, [0.34, 0.48], [30, 0]);
 
   return (
-    <div
-      ref={ref}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 16,
-        padding: "48px 24px",
-        maxWidth: 720,
-        margin: "0 auto",
-        textAlign: "center",
-      }}
-    >
-      <motion.span
-        style={{
-          color: "var(--accent)",
-          fontSize: 13,
-          fontWeight: 500,
-          textShadow: "0 0 12px rgba(61,217,255,0.5)",
-          opacity: eyebrowOpacity,
-        }}
-      >
-        {item.eyebrow}
-      </motion.span>
-
-      <h3
-        style={{
-          fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
-          marginTop: 10,
-          marginBottom: 14,
-          color: "var(--text-primary)",
-          overflow: "hidden",
-        }}
-      >
-        <SplitWord text={item.title} progress={scrollYProgress} start={0.12} end={0.32} />
-      </h3>
-
-      <motion.p
-        style={{
-          color: "var(--text-muted)",
-          fontSize: 16,
-          lineHeight: 1.7,
-          maxWidth: 420,
-          marginInline: "auto",
-          opacity: copyOpacity,
-          y: copyY,
-        }}
-      >
-        {item.copy}
-      </motion.p>
-
+    <div ref={ref} style={{ minHeight: "160vh", position: "relative" }}>
       <div
         style={{
-          width: "min(380px, 78vw)",
-          position: "relative",
-          marginTop: 12,
+          position: "sticky",
+          top: 0,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 16,
+          padding: "48px 24px",
+          maxWidth: 720,
+          margin: "0 auto",
+          textAlign: "center",
         }}
       >
-        <motion.div
+        <motion.span
           style={{
-            position: "absolute",
-            inset: "-20%",
-            background:
-              "radial-gradient(circle, rgba(61,217,255,0.18) 0%, transparent 70%)",
-            scale: glowScale,
-            zIndex: 0,
-          }}
-        />
-        <motion.div
-          style={{
-            rotate,
-            scale,
-            skewX: skew,
-            opacity: imgOpacity,
-            maskImage:
-              "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
-            position: "relative",
-            zIndex: 1,
+            color: "var(--accent)",
+            fontSize: 13,
+            fontWeight: 500,
+            textShadow: "0 0 12px rgba(61,217,255,0.5)",
+            opacity: eyebrowOpacity,
           }}
         >
-          <Image
-            src={item.image}
-            alt={item.alt}
-            width={500}
-            height={500}
-            style={{ width: "100%", height: "auto", display: "block" }}
+          {item.eyebrow}
+        </motion.span>
+
+        <h3
+          style={{
+            fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
+            marginTop: 10,
+            marginBottom: 14,
+            color: "var(--text-primary)",
+            overflow: "hidden",
+          }}
+        >
+          <SplitWord text={item.title} progress={scrollYProgress} start={0.12} end={0.32} />
+        </h3>
+
+        <motion.p
+          style={{
+            color: "var(--text-muted)",
+            fontSize: 16,
+            lineHeight: 1.7,
+            maxWidth: 420,
+            marginInline: "auto",
+            opacity: copyOpacity,
+            y: copyY,
+          }}
+        >
+          {item.copy}
+        </motion.p>
+
+        <div
+          style={{
+            width: "min(380px, 78vw)",
+            position: "relative",
+            marginTop: 12,
+          }}
+        >
+          {/* pulsing glow behind the image, scales with scroll for extra depth */}
+          <motion.div
+            style={{
+              position: "absolute",
+              inset: "-20%",
+              background:
+                "radial-gradient(circle, rgba(61,217,255,0.18) 0%, transparent 70%)",
+              scale: glowScale,
+              zIndex: 0,
+            }}
           />
-        </motion.div>
+          <motion.div
+            style={{
+              rotate,
+              scale,
+              skewX: skew,
+              opacity: imgOpacity,
+              maskImage:
+                "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            <Image
+              src={item.image}
+              alt={item.alt}
+              width={500}
+              height={500}
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
+          </motion.div>
+        </div>
       </div>
     </div>
   );
