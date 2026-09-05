@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 const links = [
@@ -49,9 +49,10 @@ export default function Nav() {
           TFM.
         </motion.span>
 
-        <button
+        <motion.button
           aria-label="Menu"
           onClick={() => setOpen(true)}
+          whileTap={{ scale: 0.85 }}
           style={{
             background: "none",
             border: "none",
@@ -64,67 +65,95 @@ export default function Nav() {
           <span style={{ width: 30, height: 2.5, background: "var(--text-primary)" }} />
           <span style={{ width: 30, height: 2.5, background: "var(--text-primary)" }} />
           <span style={{ width: 30, height: 2.5, background: "var(--text-primary)" }} />
-        </button>
+        </motion.button>
       </header>
 
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.98 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 100,
-            background: "var(--bg)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 28,
-          }}
-        >
-          <button
-            aria-label="Close menu"
-            onClick={() => setOpen(false)}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ clipPath: "circle(0% at 90% 5%)" }}
+            animate={{ clipPath: "circle(150% at 90% 5%)" }}
+            exit={{ clipPath: "circle(0% at 90% 5%)" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              position: "absolute",
-              top: 20,
-              right: 24,
-              background: "none",
-              border: "none",
-              color: "var(--text-primary)",
-              fontSize: 28,
-              padding: 8,
+              position: "fixed",
+              inset: 0,
+              zIndex: 100,
+              background: "var(--bg)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              overflow: "hidden",
             }}
           >
-            ×
-          </button>
-
-          {links.map((link, i) => (
-            <motion.a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.1 + i * 0.08,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+            <motion.div
+              animate={{ opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               style={{
-                fontFamily: "var(--font-display)",
-                fontSize: 28,
+                position: "absolute",
+                inset: 0,
+                background:
+                  "radial-gradient(circle at 50% 40%, rgba(61,217,255,0.15) 0%, transparent 60%)",
+                pointerEvents: "none",
+              }}
+            />
+
+            <motion.button
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileTap={{ scale: 0.85, rotate: 90 }}
+              style={{
+                position: "absolute",
+                top: 20,
+                right: 24,
+                background: "none",
+                border: "none",
                 color: "var(--text-primary)",
+                fontSize: 32,
+                padding: 8,
+                zIndex: 2,
               }}
             >
-              {link.label}
-            </motion.a>
-          ))}
-        </motion.div>
-      )}
+              ×
+            </motion.button>
+
+            {links.map((link, i) => (
+              <motion.a
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                initial={{ opacity: 0, y: 60, rotateX: -40, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.15 + i * 0.1,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                whileHover={{
+                  scale: 1.08,
+                  color: "var(--accent)",
+                  textShadow: "0 0 20px rgba(61,217,255,0.8)",
+                }}
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.8rem, 6vw, 2.6rem)",
+                  fontWeight: 600,
+                  color: "var(--text-primary)",
+                  padding: "10px 0",
+                  zIndex: 2,
+                }}
+              >
+                {link.label}
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
