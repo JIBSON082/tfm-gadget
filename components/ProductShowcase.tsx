@@ -104,17 +104,33 @@ function Row({ item }: { item: ShowcaseItem }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.85", "start 0.15"],
+    offset: ["start 0.95", "start 0.05"],
   });
 
   // Ordered reveal sequence — each stage fully completes before the next
-  // begins, so nothing overlaps or appears out of sequence:
-  // eyebrow (0.00–0.12) → title (0.12–0.32) → copy (0.32–0.48) → image solid by 0.48
-  const rotate = useTransform(scrollYProgress, [0, 1], [item.spinDir * -35, item.spinDir * 35]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.75, 1.08, 0.75]);
-  const skew = useTransform(scrollYProgress, [0, 0.5, 1], [item.spinDir * 6, 0, item.spinDir * -6]);
-  const imgOpacity = useTransform(scrollYProgress, [0.36, 0.5, 0.85, 1], [0.15, 1, 1, 0.2]);
-  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1.3, 0.6]);
+  // begins: eyebrow (0–0.12) → title (0.12–0.32) → copy (0.32–0.48) →
+  // image settles to a calm, fully-resolved resting state by 0.5, holds
+  // neutral through the middle of its visible time, then eases back out
+  // only as it approaches leaving the screen (0.85–1). This fixes the old
+  // bug where the image stayed clamped at a rotated extreme the whole time
+  // it was on screen instead of ever fully settling.
+  const rotate = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [item.spinDir * -22, 0, item.spinDir * 22]
+  );
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.82, 1, 0.82]);
+  const skew = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [item.spinDir * 4, 0, item.spinDir * -4]
+  );
+  const imgOpacity = useTransform(
+    scrollYProgress,
+    [0.36, 0.5, 0.85, 1],
+    [0.15, 1, 1, 0.3]
+  );
+  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1.2, 0.6]);
 
   const eyebrowOpacity = useTransform(scrollYProgress, [0, 0.12], [0, 1]);
   const copyOpacity = useTransform(scrollYProgress, [0.34, 0.48], [0, 1]);
