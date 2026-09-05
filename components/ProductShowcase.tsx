@@ -104,18 +104,21 @@ function Row({ item }: { item: ShowcaseItem }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.9", "end 0.1"],
+    offset: ["start 0.85", "start 0.15"],
   });
 
+  // Ordered reveal sequence — each stage fully completes before the next
+  // begins, so nothing overlaps or appears out of sequence:
+  // eyebrow (0.00–0.12) → title (0.12–0.32) → copy (0.32–0.48) → image solid by 0.48
   const rotate = useTransform(scrollYProgress, [0, 1], [item.spinDir * -35, item.spinDir * 35]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.75, 1.08, 0.75]);
   const skew = useTransform(scrollYProgress, [0, 0.5, 1], [item.spinDir * 6, 0, item.spinDir * -6]);
-  const imgOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.2, 1, 1, 0.2]);
+  const imgOpacity = useTransform(scrollYProgress, [0.36, 0.5, 0.85, 1], [0.15, 1, 1, 0.2]);
   const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1.3, 0.6]);
 
-  const eyebrowOpacity = useTransform(scrollYProgress, [0.05, 0.2], [0, 1]);
-  const copyOpacity = useTransform(scrollYProgress, [0.35, 0.55], [0, 1]);
-  const copyY = useTransform(scrollYProgress, [0.35, 0.55], [30, 0]);
+  const eyebrowOpacity = useTransform(scrollYProgress, [0, 0.12], [0, 1]);
+  const copyOpacity = useTransform(scrollYProgress, [0.34, 0.48], [0, 1]);
+  const copyY = useTransform(scrollYProgress, [0.34, 0.48], [30, 0]);
 
   return (
     <div
@@ -152,7 +155,7 @@ function Row({ item }: { item: ShowcaseItem }) {
           overflow: "hidden",
         }}
       >
-        <SplitWord text={item.title} progress={scrollYProgress} start={0.1} end={0.4} />
+        <SplitWord text={item.title} progress={scrollYProgress} start={0.12} end={0.32} />
       </h3>
 
       <motion.p
