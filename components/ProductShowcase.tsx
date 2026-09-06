@@ -1,13 +1,17 @@
 "use client";
 
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
+import CTAPair from "@/components/CTAPair";
+import AIPanel from "@/components/AIPanel";
+import type { Category } from "@/data/products";
 
 interface ShowcaseItem {
   image: string;
   alt: string;
   eyebrow: string;
+  category: Category;
   title: string;
   copy: string;
   spinDir: number;
@@ -19,6 +23,7 @@ const items: ShowcaseItem[] = [
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523797/lucid-origin_A_wireless_earbuds_charging_case_fully_closed_with_no_visible_seam_or_hinge_line-3_1_yexaqx.jpg",
     alt: "TFM wireless earbuds",
     eyebrow: "Earbuds",
+    category: "Earbuds & Earphones",
     title: "Sound that fits your pocket, and your budget",
     copy: "From everyday buds to noise-cancelling picks — tell us what you want to spend, we'll show you what's real.",
     spinDir: 1,
@@ -28,6 +33,7 @@ const items: ShowcaseItem[] = [
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_pair_of_over-ear_headphones_floating_at_a_dynamic_diagonal_angle_in_a_complete-0_hefxs3.jpg",
     alt: "TFM headphones",
     eyebrow: "Headphones",
+    category: "Headphones & Headsets",
     title: "Studio sound, street price",
     copy: "JBL, Bose, and more — over-ear comfort without the over-the-top markup.",
     spinDir: -1,
@@ -37,6 +43,7 @@ const items: ShowcaseItem[] = [
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_cylindrical_portable_bluetooth_speaker_floating_at_a_dynamic_diagonal_angle_in-1_1_bgipyq.jpg",
     alt: "TFM bluetooth speaker",
     eyebrow: "Speakers",
+    category: "Speakers & Microphones",
     title: "Turn it up, without turning out your wallet",
     copy: "Portable speakers built for the party, priced for the plug.",
     spinDir: 1,
@@ -46,6 +53,7 @@ const items: ShowcaseItem[] = [
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_braided_charging_cable_neatly_coiled_and_secured_inside_a_small_open_zippered_-0_1_sdqdtp.jpg",
     alt: "TFM charging cable",
     eyebrow: "Chargers & Cables",
+    category: "Chargers & Cables",
     title: "The small stuff, sorted",
     copy: "Cables, heads, and everyday essentials — the things you always need and never want to overpay for.",
     spinDir: -1,
@@ -55,6 +63,7 @@ const items: ShowcaseItem[] = [
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523795/lucid-origin_A_modern_smartwatch_floating_at_a_dynamic_diagonal_angle_in_a_completely_dark_vo-0_1_zk69bp.jpg",
     alt: "TFM smartwatch",
     eyebrow: "Smartwatches",
+    category: "Smartwatches",
     title: "Track everything. Overspend on nothing.",
     copy: "Itel, Oraimo, and more — smart features at a price that actually makes sense.",
     spinDir: 1,
@@ -98,7 +107,7 @@ function SplitWord({
   );
 }
 
-function Row({ item }: { item: ShowcaseItem }) {
+function Row({ item, onAskAI }: { item: ShowcaseItem; onAskAI: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -174,6 +183,8 @@ function Row({ item }: { item: ShowcaseItem }) {
         {item.copy}
       </motion.p>
 
+      <CTAPair category={item.category} onAskAI={onAskAI} />
+
       <div
         style={{
           width: "min(380px, 78vw)",
@@ -218,11 +229,14 @@ function Row({ item }: { item: ShowcaseItem }) {
 }
 
 export default function ProductShowcase() {
+  const [aiOpen, setAiOpen] = useState(false);
+
   return (
     <section style={{ background: "var(--bg)" }}>
       {items.map((item) => (
-        <Row key={item.eyebrow} item={item} />
+        <Row key={item.eyebrow} item={item} onAskAI={() => setAiOpen(true)} />
       ))}
+      <AIPanel open={aiOpen} onClose={() => setAiOpen(false)} />
     </section>
   );
 }
