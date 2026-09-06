@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import { CartProvider } from "@/components/CartContext";
 
 export const metadata: Metadata = {
   title: "TFM Gadget — Name Your Price. Get Your Gadget.",
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SmoothScroll>{children}</SmoothScroll>
+        <CartProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </CartProvider>
       </body>
     </html>
   );
