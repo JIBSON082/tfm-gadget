@@ -1,10 +1,13 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
+import CTAPair from "@/components/CTAPair";
+import AIPanel from "@/components/AIPanel";
 
 export default function Hero() {
+  const [aiOpen, setAiOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -121,6 +124,9 @@ export default function Hero() {
         earbuds, chargers, and more.
       </motion.p>
 
+      <CTAPair onAskAI={() => setAiOpen(true)} />
+
+      {/* Hero product image — loads with a scale+fade entrance, then reacts to scroll */}
       <motion.div
         initial={{ opacity: 0, scale: 0.7, y: -120, rotate: -18, filter: "blur(14px)" }}
         animate={{ opacity: 1, scale: 1, y: 0, rotate: 0, filter: "blur(0px)" }}
@@ -160,6 +166,8 @@ export default function Hero() {
           scroll to explore ↓
         </span>
       </motion.div>
+
+      <AIPanel open={aiOpen} onClose={() => setAiOpen(false)} />
     </section>
   );
 }
