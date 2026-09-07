@@ -130,6 +130,8 @@ function Row({ item, onAskAI }: { item: ShowcaseItem; onAskAI: () => void }) {
   const eyebrowOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
   const copyOpacity = useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
   const copyY = useTransform(scrollYProgress, [0.4, 0.6], [20, 0]);
+  const ctaOpacity = useTransform(scrollYProgress, [0.62, 0.78], [0, 1]);
+  const ctaY = useTransform(scrollYProgress, [0.62, 0.78], [16, 0]);
 
   return (
     <div
@@ -183,7 +185,9 @@ function Row({ item, onAskAI }: { item: ShowcaseItem; onAskAI: () => void }) {
         {item.copy}
       </motion.p>
 
-      <CTAPair category={item.category} onAskAI={onAskAI} />
+      <motion.div style={{ opacity: ctaOpacity, y: ctaY }}>
+        <CTAPair category={item.category} onAskAI={onAskAI} />
+      </motion.div>
 
       <div
         style={{
