@@ -124,7 +124,13 @@ export default function Hero() {
         earbuds, chargers, and more.
       </motion.p>
 
-      <CTAPair onAskAI={() => setAiOpen(true)} />
+   <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <CTAPair onAskAI={() => setAiOpen(true)} />
+      </motion.div>
 
       {/* Hero product image — loads with a scale+fade entrance, then reacts to scroll */}
       <motion.div
