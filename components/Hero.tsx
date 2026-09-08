@@ -23,7 +23,7 @@ const slides: Slide[] = [
     eyebrow: "Power Banks",
     category: "Power Banks",
     title: "Never die again",
-    copy: "From quick top-ups to laptop-grade capacity — a power bank for every budget.",
+    copy: "A power bank for every budget.",
   },
   {
     image:
@@ -31,7 +31,7 @@ const slides: Slide[] = [
     eyebrow: "Earbuds",
     category: "Earbuds & Earphones",
     title: "Sound that fits your budget",
-    copy: "From everyday buds to noise-cancelling picks — tell us what you want to spend.",
+    copy: "Tell us what you want to spend.",
   },
   {
     image:
@@ -39,7 +39,7 @@ const slides: Slide[] = [
     eyebrow: "Headphones",
     category: "Headphones & Headsets",
     title: "Studio sound, street price",
-    copy: "JBL, Bose, and more — over-ear comfort without the over-the-top markup.",
+    copy: "Over-ear comfort, no over-the-top markup.",
   },
   {
     image:
@@ -47,7 +47,7 @@ const slides: Slide[] = [
     eyebrow: "Speakers",
     category: "Speakers & Microphones",
     title: "Turn it up, not your wallet",
-    copy: "Portable speakers built for the party, priced for the plug.",
+    copy: "Priced for the plug.",
   },
   {
     image:
@@ -55,7 +55,7 @@ const slides: Slide[] = [
     eyebrow: "Chargers & Cables",
     category: "Chargers & Cables",
     title: "The small stuff, sorted",
-    copy: "Cables, heads, and everyday essentials — never overpay for the basics again.",
+    copy: "Never overpay for the basics.",
   },
   {
     image:
@@ -63,67 +63,41 @@ const slides: Slide[] = [
     eyebrow: "Smartwatches",
     category: "Smartwatches",
     title: "Track everything. Overspend on nothing.",
-    copy: "Itel, Oraimo, and more — smart features at a price that makes sense.",
+    copy: "Smart features, sensible prices.",
   },
 ];
 
-const AUTO_ADVANCE_MS = 4500;
+const AUTO_ADVANCE_MS = 4000;
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
   const [aiOpen, setAiOpen] = useState(false);
-  const [paused, setPaused] = useState(false);
 
-  const goTo = useCallback((next: number) => {
-    setDirection(next > index ? 1 : -1);
-    setIndex(((next % slides.length) + slides.length) % slides.length);
-  }, [index]);
-
-  const next = useCallback(() => goTo(index + 1), [goTo, index]);
-  const prev = useCallback(() => goTo(index - 1), [goTo, index]);
+  const next = useCallback(() => {
+    setIndex((i) => (i + 1) % slides.length);
+  }, []);
 
   useEffect(() => {
-    if (paused) return;
     const timer = setInterval(next, AUTO_ADVANCE_MS);
     return () => clearInterval(timer);
-  }, [next, paused]);
+  }, [next]);
 
   const slide = slides[index];
 
   const imageVariants = {
-    enter: (dir: number) => ({
-      rotateY: dir > 0 ? 90 : -90,
-      opacity: 0,
-      scale: 0.85,
-    }),
+    enter: { rotateY: 90, opacity: 0, scale: 0.85 },
     center: { rotateY: 0, opacity: 1, scale: 1 },
-    exit: (dir: number) => ({
-      rotateY: dir > 0 ? -90 : 90,
-      opacity: 0,
-      scale: 0.85,
-    }),
+    exit: { rotateY: -90, opacity: 0, scale: 0.85 },
   };
 
   const textVariants = {
-    enter: (dir: number) => ({
-      rotateX: dir > 0 ? 30 : -30,
-      y: dir > 0 ? 24 : -24,
-      opacity: 0,
-    }),
+    enter: { rotateX: 30, y: 20, opacity: 0 },
     center: { rotateX: 0, y: 0, opacity: 1 },
-    exit: (dir: number) => ({
-      rotateX: dir > 0 ? -30 : 30,
-      y: dir > 0 ? -24 : 24,
-      opacity: 0,
-    }),
+    exit: { rotateX: -30, y: -20, opacity: 0 },
   };
 
   return (
     <section
-      onTouchStart={() => setPaused(true)}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
       style={{
         minHeight: "100vh",
         position: "relative",
@@ -131,7 +105,7 @@ export default function Hero() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "100px 24px 40px",
+        padding: "84px 20px 24px",
         overflow: "hidden",
       }}
     >
@@ -150,37 +124,44 @@ export default function Hero() {
       />
 
       <motion.p
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
         style={{
           color: "var(--text-muted)",
-          fontSize: 19,
+          fontSize: 17,
           fontWeight: 600,
           letterSpacing: "-0.01em",
-          marginBottom: 18,
+          marginBottom: 10,
           textAlign: "center",
         }}
       >
         Lagos's best plug
       </motion.p>
 
-      <div style={{ perspective: 1000, minHeight: 190, display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <AnimatePresence mode="wait" custom={direction}>
+      <div
+        style={{
+          perspective: 1000,
+          minHeight: 130,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <AnimatePresence mode="wait">
           <motion.div
             key={slide.eyebrow}
-            custom={direction}
             variants={textVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             style={{ textAlign: "center" }}
           >
             <span
               style={{
                 color: "var(--accent)",
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: 600,
                 textShadow: "0 0 12px rgba(61,217,255,0.5)",
               }}
@@ -189,14 +170,14 @@ export default function Hero() {
             </span>
             <h1
               style={{
-                fontSize: "clamp(2rem, 5.5vw, 3.6rem)",
-                marginTop: 10,
+                fontSize: "clamp(1.7rem, 5vw, 3.2rem)",
+                marginTop: 6,
                 maxWidth: 780,
                 color: "var(--text-primary)",
                 fontFamily: "var(--font-display)",
                 fontWeight: 600,
                 letterSpacing: "-0.02em",
-                lineHeight: 1.1,
+                lineHeight: 1.08,
               }}
             >
               {slide.title}
@@ -204,10 +185,10 @@ export default function Hero() {
             <p
               style={{
                 color: "var(--text-muted)",
-                fontSize: 16,
-                maxWidth: 460,
-                margin: "16px auto 0",
-                lineHeight: 1.6,
+                fontSize: 14,
+                maxWidth: 400,
+                margin: "8px auto 0",
+                lineHeight: 1.5,
               }}
             >
               {slide.copy}
@@ -219,20 +200,19 @@ export default function Hero() {
       <div
         style={{
           perspective: 1200,
-          width: "min(460px, 78vw)",
-          marginTop: 20,
+          width: "min(230px, 46vw)",
+          marginTop: 14,
           position: "relative",
         }}
       >
-        <AnimatePresence mode="wait" custom={direction}>
+        <AnimatePresence mode="wait">
           <motion.div
             key={slide.image}
-            custom={direction}
             variants={imageVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             style={{
               maskImage:
                 "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
@@ -253,69 +233,26 @@ export default function Hero() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        style={{ marginTop: 24 }}
+        transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        style={{ marginTop: 14 }}
       >
         <CTAPair category={slide.category} onAskAI={() => setAiOpen(true)} />
       </motion.div>
 
       <TrustStrip />
 
-      <button
-        aria-label="Previous product"
-        onClick={prev}
-        style={{
-          position: "absolute",
-          left: 12,
-          top: "58%",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid var(--surface-border)",
-          borderRadius: "50%",
-          width: 38,
-          height: 38,
-          color: "var(--text-primary)",
-          fontSize: 16,
-          zIndex: 5,
-        }}
-      >
-        ‹
-      </button>
-      <button
-        aria-label="Next product"
-        onClick={next}
-        style={{
-          position: "absolute",
-          right: 12,
-          top: "58%",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid var(--surface-border)",
-          borderRadius: "50%",
-          width: 38,
-          height: 38,
-          color: "var(--text-primary)",
-          fontSize: 16,
-          zIndex: 5,
-        }}
-      >
-        ›
-      </button>
-
-      <div style={{ display: "flex", gap: 8, marginTop: 24 }}>
+      <div style={{ display: "flex", gap: 6, marginTop: 14 }}>
         {slides.map((s, i) => (
-          <button
+          <span
             key={s.eyebrow}
-            aria-label={`Go to ${s.eyebrow}`}
-            onClick={() => goTo(i)}
             style={{
-              width: i === index ? 20 : 7,
-              height: 7,
+              width: i === index ? 16 : 5,
+              height: 5,
               borderRadius: 999,
-              border: "none",
               background: i === index ? "var(--accent)" : "var(--surface-border)",
               transition: "all 0.3s ease",
-              padding: 0,
             }}
           />
         ))}
