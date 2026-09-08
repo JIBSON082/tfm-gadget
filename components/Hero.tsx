@@ -133,6 +133,8 @@ export default function Hero() {
         <CTAPair onAskAI={() => setAiOpen(true)} />
       </motion.div>
 
+      <TrustStrip />
+
       {/* Hero product image — loads with a scale+fade entrance, then reacts to scroll */}
       <motion.div
         initial={{ opacity: 0, scale: 0.7, y: -120, rotate: -18, filter: "blur(14px)" }}
