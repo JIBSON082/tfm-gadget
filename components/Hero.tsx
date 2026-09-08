@@ -214,7 +214,7 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
-      <motion.div
+    <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -222,13 +222,11 @@ export default function Hero() {
         <CTAPair category={slide.category} onAskAI={() => setAiOpen(true)} />
       </motion.div>
 
-      <TrustStrip />
-
       <div
         style={{
           perspective: 1200,
           width: "min(460px, 78vw)",
-          marginTop: 36,
+          marginTop: 28,
           position: "relative",
         }}
       >
@@ -259,6 +257,8 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <TrustStrip />
 
       <button
         aria-label="Previous product"
