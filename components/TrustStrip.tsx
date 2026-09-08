@@ -2,59 +2,78 @@
 
 import { motion } from "framer-motion";
 
-const WHATSAPP_NUMBER = "2348136880920";
-const DEFAULT_MESSAGE = "Hi TFM Gadget, I have a question about your products.";
+const badges = [
+  {
+    icon: "🚚",
+    title: "Fast delivery",
+    detail: "Across Lagos, in days not weeks",
+  },
+  {
+    icon: "🛡️",
+    title: "Warranty included",
+    detail: "On every item we sell",
+  },
+  {
+    icon: "💬",
+    title: "Real support",
+    detail: "A real person on WhatsApp",
+  },
+  {
+    icon: "✅",
+    title: "Pay on your terms",
+    detail: "Name your price, we'll confirm fast",
+  },
+];
 
-export default function WhatsAppButton() {
-  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    DEFAULT_MESSAGE
-  )}`;
-
+export default function TrustStrip() {
   return (
-    <motion.a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Chat with TFM Gadget on WhatsApp"
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 0.92 }}
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
       style={{
-        position: "fixed",
-        bottom: 22,
-        right: 22,
-        zIndex: 90,
-        width: 56,
-        height: 56,
-        borderRadius: "50%",
-        background: "#25D366",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        boxShadow: "0 4px 20px rgba(37,211,102,0.45)",
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+        gap: 10,
+        marginTop: 30,
+        maxWidth: 560,
+        width: "100%",
       }}
     >
-      <motion.span
-        animate={{ scale: [1, 1.6], opacity: [0.5, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
-        style={{
-          position: "absolute",
-          inset: 0,
-          borderRadius: "50%",
-          background: "#25D366",
-        }}
-      />
-      <svg
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="white"
-        style={{ position: "relative" }}
-      >
-        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.04 0 1.2.88 2.36 1 2.53.12.17 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.23-.17-.48-.29z" />
-      </svg>
-    </motion.a>
+      {badges.map((b) => (
+        <div
+          key={b.title}
+          style={{
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid var(--surface-border)",
+            borderRadius: 14,
+            padding: "14px 12px",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ fontSize: 18, marginBottom: 6 }}>{b.icon}</div>
+          <p
+            style={{
+              fontSize: 12.5,
+              fontWeight: 600,
+              color: "var(--text-primary)",
+              margin: 0,
+            }}
+          >
+            {b.title}
+          </p>
+          <p
+            style={{
+              fontSize: 11,
+              color: "var(--text-muted)",
+              margin: "3px 0 0",
+              lineHeight: 1.4,
+            }}
+          >
+            {b.detail}
+          </p>
+        </div>
+      ))}
+    </motion.div>
   );
 }
