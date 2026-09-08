@@ -155,7 +155,9 @@ export default function Hero() {
         transition={{ duration: 0.6, delay: 0.1 }}
         style={{
           color: "var(--text-muted)",
-          fontSize: 15,
+          fontSize: 19,
+          fontWeight: 600,
+          letterSpacing: "-0.01em",
           marginBottom: 18,
           textAlign: "center",
         }}
@@ -214,19 +216,11 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
-    <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <CTAPair category={slide.category} onAskAI={() => setAiOpen(true)} />
-      </motion.div>
-
       <div
         style={{
           perspective: 1200,
           width: "min(460px, 78vw)",
-          marginTop: 28,
+          marginTop: 20,
           position: "relative",
         }}
       >
@@ -257,6 +251,15 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        style={{ marginTop: 24 }}
+      >
+        <CTAPair category={slide.category} onAskAI={() => setAiOpen(true)} />
+      </motion.div>
 
       <TrustStrip />
 
