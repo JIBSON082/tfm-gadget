@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import CTAPair from "@/components/CTAPair";
 import AIPanel from "@/components/AIPanel";
+import TrustStrip from "@/components/TrustStrip";
 
 export default function Hero() {
   const [aiOpen, setAiOpen] = useState(false);
