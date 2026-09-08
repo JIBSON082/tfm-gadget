@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import CTAPair from "@/components/CTAPair";
 import AIPanel from "@/components/AIPanel";
-import TrustStrip from "@/components/TrustStrip";
 import type { Category } from "@/data/products";
 
 interface Slide {
@@ -23,7 +22,7 @@ const slides: Slide[] = [
     eyebrow: "Power Banks",
     category: "Power Banks",
     title: "Never die again",
-    copy: "A power bank for every budget.",
+    copy: "From quick top ups to laptop grade capacity, a power bank for every budget.",
   },
   {
     image:
@@ -31,7 +30,7 @@ const slides: Slide[] = [
     eyebrow: "Earbuds",
     category: "Earbuds & Earphones",
     title: "Sound that fits your budget",
-    copy: "Tell us what you want to spend.",
+    copy: "From everyday buds to noise cancelling picks, tell us what you want to spend.",
   },
   {
     image:
@@ -39,7 +38,7 @@ const slides: Slide[] = [
     eyebrow: "Headphones",
     category: "Headphones & Headsets",
     title: "Studio sound, street price",
-    copy: "Over-ear comfort, no over-the-top markup.",
+    copy: "JBL, Bose, and more: over ear comfort without the over the top markup.",
   },
   {
     image:
@@ -47,7 +46,7 @@ const slides: Slide[] = [
     eyebrow: "Speakers",
     category: "Speakers & Microphones",
     title: "Turn it up, not your wallet",
-    copy: "Priced for the plug.",
+    copy: "Portable speakers built for the party, priced for the plug.",
   },
   {
     image:
@@ -55,7 +54,7 @@ const slides: Slide[] = [
     eyebrow: "Chargers & Cables",
     category: "Chargers & Cables",
     title: "The small stuff, sorted",
-    copy: "Never overpay for the basics.",
+    copy: "Cables, heads, and everyday essentials, never overpay for the basics again.",
   },
   {
     image:
@@ -63,11 +62,11 @@ const slides: Slide[] = [
     eyebrow: "Smartwatches",
     category: "Smartwatches",
     title: "Track everything. Overspend on nothing.",
-    copy: "Smart features, sensible prices.",
+    copy: "Itel, Oraimo, and more: smart features at a price that makes sense.",
   },
 ];
 
-const AUTO_ADVANCE_MS = 4000;
+const AUTO_ADVANCE_MS = 4500;
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
@@ -91,9 +90,9 @@ export default function Hero() {
   };
 
   const textVariants = {
-    enter: { rotateX: 30, y: 20, opacity: 0 },
+    enter: { rotateX: 30, y: 24, opacity: 0 },
     center: { rotateX: 0, y: 0, opacity: 1 },
-    exit: { rotateX: -30, y: -20, opacity: 0 },
+    exit: { rotateX: -30, y: -24, opacity: 0 },
   };
 
   return (
@@ -105,7 +104,7 @@ export default function Hero() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "84px 20px 24px",
+        padding: "100px 24px 40px",
         overflow: "hidden",
       }}
     >
@@ -124,15 +123,15 @@ export default function Hero() {
       />
 
       <motion.p
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
         style={{
           color: "var(--text-muted)",
-          fontSize: 17,
+          fontSize: 19,
           fontWeight: 600,
           letterSpacing: "-0.01em",
-          marginBottom: 10,
+          marginBottom: 18,
           textAlign: "center",
         }}
       >
@@ -142,7 +141,7 @@ export default function Hero() {
       <div
         style={{
           perspective: 1000,
-          minHeight: 130,
+          minHeight: 190,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -155,13 +154,13 @@ export default function Hero() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             style={{ textAlign: "center" }}
           >
             <span
               style={{
                 color: "var(--accent)",
-                fontSize: 12,
+                fontSize: 13,
                 fontWeight: 600,
                 textShadow: "0 0 12px rgba(61,217,255,0.5)",
               }}
@@ -170,14 +169,14 @@ export default function Hero() {
             </span>
             <h1
               style={{
-                fontSize: "clamp(1.7rem, 5vw, 3.2rem)",
-                marginTop: 6,
+                fontSize: "clamp(2rem, 5.5vw, 3.6rem)",
+                marginTop: 10,
                 maxWidth: 780,
                 color: "var(--text-primary)",
                 fontFamily: "var(--font-display)",
                 fontWeight: 600,
                 letterSpacing: "-0.02em",
-                lineHeight: 1.08,
+                lineHeight: 1.1,
               }}
             >
               {slide.title}
@@ -185,10 +184,10 @@ export default function Hero() {
             <p
               style={{
                 color: "var(--text-muted)",
-                fontSize: 14,
-                maxWidth: 400,
-                margin: "8px auto 0",
-                lineHeight: 1.5,
+                fontSize: 16,
+                maxWidth: 460,
+                margin: "16px auto 0",
+                lineHeight: 1.6,
               }}
             >
               {slide.copy}
@@ -200,8 +199,8 @@ export default function Hero() {
       <div
         style={{
           perspective: 1200,
-          width: "min(230px, 46vw)",
-          marginTop: 14,
+          width: "min(340px, 62vw)",
+          marginTop: 28,
           position: "relative",
         }}
       >
@@ -212,7 +211,7 @@ export default function Hero() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={{
               maskImage:
                 "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
@@ -233,23 +232,21 @@ export default function Hero() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        style={{ marginTop: 14 }}
+        transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        style={{ marginTop: 28 }}
       >
         <CTAPair category={slide.category} onAskAI={() => setAiOpen(true)} />
       </motion.div>
 
-      <TrustStrip />
-
-      <div style={{ display: "flex", gap: 6, marginTop: 14 }}>
+      <div style={{ display: "flex", gap: 8, marginTop: 24 }}>
         {slides.map((s, i) => (
           <span
             key={s.eyebrow}
             style={{
-              width: i === index ? 16 : 5,
-              height: 5,
+              width: i === index ? 20 : 7,
+              height: 7,
               borderRadius: 999,
               background: i === index ? "var(--accent)" : "var(--surface-border)",
               transition: "all 0.3s ease",
