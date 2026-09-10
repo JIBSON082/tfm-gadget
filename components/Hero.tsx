@@ -103,8 +103,8 @@ export default function Hero() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        padding: "100px 24px 40px",
+        justifyContent: "flex-start",
+        padding: "84px 24px 32px",
         overflow: "hidden",
       }}
     >
@@ -141,7 +141,7 @@ export default function Hero() {
       <div
         style={{
           perspective: 1000,
-          minHeight: 190,
+          minHeight: 160,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -199,8 +199,8 @@ export default function Hero() {
       <div
         style={{
           perspective: 1200,
-          width: "min(364px, 66vw)",
-          marginTop: 18,
+          width: "min(380px, 75vw)",
+          marginTop: 28,
           position: "relative",
         }}
       >
@@ -235,25 +235,10 @@ export default function Hero() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        style={{ marginTop: 28 }}
+        style={{ marginTop: 16 }}
       >
         <CTAPair category={slide.category} onAskAI={() => setAiOpen(true)} />
       </motion.div>
-
-      <div style={{ display: "flex", gap: 8, marginTop: 24 }}>
-        {slides.map((s, i) => (
-          <span
-            key={s.eyebrow}
-            style={{
-              width: i === index ? 20 : 7,
-              height: 7,
-              borderRadius: 999,
-              background: i === index ? "var(--accent)" : "var(--surface-border)",
-              transition: "all 0.3s ease",
-            }}
-          />
-        ))}
-      </div>
 
       <AIPanel open={aiOpen} onClose={() => setAiOpen(false)} />
     </section>
