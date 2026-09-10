@@ -35,13 +35,13 @@ export default function Nav() {
             fontSize: 28,
             letterSpacing: "-0.02em",
             backgroundImage:
-              "linear-gradient(90deg, var(--text-primary) 0%, var(--text-primary) 30%, #2563eb 50%, var(--text-primary) 70%, var(--text-primary) 100%)",
+              "linear-gradient(90deg, var(--text-primary) 0%, var(--text-primary) 30%, var(--accent) 50%, var(--text-primary) 70%, var(--text-primary) 100%)",
             backgroundSize: "250% 100%",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             color: "transparent",
             filter:
-              "drop-shadow(0 0 8px rgba(37,99,235,0.75)) drop-shadow(0 0 20px rgba(37,99,235,0.5)) drop-shadow(0 0 36px rgba(29,78,216,0.35))",
+              "drop-shadow(0 0 8px rgba(61,217,255,0.7)) drop-shadow(0 0 20px rgba(61,217,255,0.45)) drop-shadow(0 0 36px rgba(30,107,128,0.4))",
           }}
           animate={{ backgroundPosition: ["200% 0%", "-50% 0%"] }}
           transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
