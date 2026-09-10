@@ -196,12 +196,16 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
-      <div
+     <div
         style={{
           perspective: 1200,
-          width: "min(378px, 74vw)",
+          width: "min(380px, 75vw)",
+          height: 300,
           marginTop: 28,
           position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <AnimatePresence mode="wait">
@@ -217,6 +221,11 @@ export default function Hero() {
                 "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
               WebkitMaskImage:
                 "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: "100%",
             }}
           >
             <Image
@@ -225,7 +234,13 @@ export default function Hero() {
               width={800}
               height={800}
               priority={index === 0}
-              style={{ width: "100%", height: "auto", display: "block" }}
+              style={{
+                width: "auto",
+                height: "auto",
+                maxWidth: "100%",
+                maxHeight: "100%",
+                display: "block",
+              }}
             />
           </motion.div>
         </AnimatePresence>
