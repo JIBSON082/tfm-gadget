@@ -104,7 +104,7 @@ export default function Hero() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        padding: "84px 24px 32px",
+        padding: "84px 24px 16px",
         overflow: "hidden",
       }}
     >
@@ -199,7 +199,7 @@ export default function Hero() {
       <div
         style={{
           perspective: 1200,
-          width: "min(380px, 75vw)",
+          width: "min(378px, 74vw)",
           marginTop: 28,
           position: "relative",
         }}
