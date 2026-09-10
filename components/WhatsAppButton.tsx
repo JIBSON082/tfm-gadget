@@ -23,7 +23,7 @@ export default function WhatsAppButton() {
       whileTap={{ scale: 0.92 }}
       style={{
         position: "fixed",
-        bottom: 90,
+        bottom: 26,
         right: 20,
         zIndex: 90,
         width: 54,
