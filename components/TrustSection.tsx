@@ -29,7 +29,7 @@ export default function TrustSection() {
   return (
     <section
       style={{
-        padding: "60px 24px 80px",
+        padding: "24px 24px 80px",
         maxWidth: 1000,
         margin: "0 auto",
       }}
