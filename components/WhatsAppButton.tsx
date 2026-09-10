@@ -23,21 +23,20 @@ export default function WhatsAppButton() {
       whileTap={{ scale: 0.92 }}
       style={{
         position: "fixed",
-        bottom: 22,
-        right: 22,
+        bottom: 90,
+        right: 20,
         zIndex: 90,
-        width: 56,
-        height: 56,
+        width: 54,
+        height: 54,
         borderRadius: "50%",
         background: "#25D366",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        boxShadow: "0 4px 20px rgba(37,211,102,0.45)",
       }}
     >
       <motion.span
-        animate={{ scale: [1, 1.6], opacity: [0.5, 0] }}
+        animate={{ scale: [1, 1.7], opacity: [0.45, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
         style={{
           position: "absolute",
