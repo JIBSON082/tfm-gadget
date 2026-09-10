@@ -23,11 +23,11 @@ export default function WhatsAppButton() {
       whileTap={{ scale: 0.92 }}
       style={{
         position: "fixed",
-        bottom: 26,
-        right: 20,
+        bottom: 18,
+        right: 18,
         zIndex: 90,
-        width: 54,
-        height: 54,
+        width: 48,
+        height: 48,
         borderRadius: "50%",
         background: "#25D366",
         display: "flex",
@@ -46,8 +46,8 @@ export default function WhatsAppButton() {
         }}
       />
       <svg
-        width="28"
-        height="28"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="white"
         style={{ position: "relative" }}
