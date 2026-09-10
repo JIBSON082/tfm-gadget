@@ -200,7 +200,7 @@ export default function Hero() {
         style={{
           perspective: 1200,
           width: "min(364px, 66vw)",
-          marginTop: 28,
+          marginTop: 18,
           position: "relative",
         }}
       >
