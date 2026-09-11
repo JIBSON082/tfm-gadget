@@ -21,48 +21,48 @@ const slides: Slide[] = [
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_matte_black_power_bank_floating_at_a_dynamic_diagonal_angle_in_a_completely_da-3_w6nrkh.jpg",
     eyebrow: "Power Banks",
     category: "Power Banks",
-    title: "Never die again",
-    copy: "From small top up banks to laptop size capacity, we have one for your budget.",
+    title: "Never run out of power.",
+    copy: "From everyday power banks to high-capacity options, find the right one for your phone, your routine and your budget.",
   },
   {
     image:
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523797/lucid-origin_A_wireless_earbuds_charging_case_fully_closed_with_no_visible_seam_or_hinge_line-3_1_yexaqx.jpg",
     eyebrow: "Earbuds",
     category: "Earbuds & Earphones",
-    title: "Sound that fits your budget",
-    copy: "From everyday buds to noise cancelling ones, just tell us what you want to spend.",
+    title: "Great sound, without the heavy price tag.",
+    copy: "Whether it is for calls, music, workouts or everyday use, get earbuds that deliver quality without overspending.",
   },
   {
     image:
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_pair_of_over-ear_headphones_floating_at_a_dynamic_diagonal_angle_in_a_complete-0_hefxs3.jpg",
     eyebrow: "Headphones",
     category: "Headphones & Headsets",
-    title: "Studio sound, street price",
-    copy: "JBL, Bose and more. Enjoy the comfort without paying extra just for the brand name.",
+    title: "Premium sound. Better value.",
+    copy: "JBL, Bose and more. Enjoy great sound and lasting comfort without paying more simply for the brand.",
   },
   {
     image:
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_cylindrical_portable_bluetooth_speaker_floating_at_a_dynamic_diagonal_angle_in-1_1_bgipyq.jpg",
     eyebrow: "Speakers",
     category: "Speakers & Microphones",
-    title: "Turn it up, not your wallet",
-    copy: "Portable speakers made for the party, priced for your pocket.",
+    title: "Bring the sound wherever you go.",
+    copy: "From personal listening to weekend hangouts, find portable speakers with the sound and battery life to keep up.",
   },
   {
     image:
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_braided_charging_cable_neatly_coiled_and_secured_inside_a_small_open_zippered_-0_1_sdqdtp.jpg",
     eyebrow: "Chargers & Cables",
     category: "Chargers & Cables",
-    title: "The small stuff, sorted",
-    copy: "Cables, heads and the everyday things you need. Stop overpaying for the basics.",
+    title: "The essentials, done right.",
+    copy: "Quality chargers, cables and everyday accessories you can rely on at prices that make sense.",
   },
   {
     image:
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523795/lucid-origin_A_modern_smartwatch_floating_at_a_dynamic_diagonal_angle_in_a_completely_dark_vo-0_1_zk69bp.jpg",
     eyebrow: "Smartwatches",
     category: "Smartwatches",
-    title: "Track everything. Overspend on nothing.",
-    copy: "Itel, Oraimo and more. Get all the smart features at a price that makes sense.",
+    title: "Track more. Spend less.",
+    copy: "Itel, Oraimo and more. Stay connected, monitor your activity and enjoy smart features without stretching your budget.",
   },
 ];
 
@@ -135,7 +135,7 @@ export default function Hero() {
           textAlign: "center",
         }}
       >
-        Lagos's best plug
+        Quality gadgets. Better prices.
       </motion.p>
 
       <div
