@@ -139,10 +139,11 @@ const badges = [
         <motion.rect
           x="5" y="12" width="38" height="25" rx="4"
           stroke="var(--accent)" strokeWidth="1.8"
-          initial={{ pathLength: 0, opacity: 0 }}
-          whileInView={{ pathLength: 1, opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.85 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.75, ease: "easeOut", delay: 0.15 }}
+          style={{ transformOrigin: "center" }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
         />
         <motion.rect
           x="5" y="18" width="38" height="6"
