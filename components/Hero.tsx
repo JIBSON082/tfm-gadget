@@ -105,17 +105,17 @@ export default function Hero() {
 
   return (
     <section
-      style={{
-        minHeight: "100vh",
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        padding: "84px 24px 16px",
-        overflow: "hidden",
-      }}
-    >
+  style={{
+    minHeight: "100dvh",
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: "84px 24px calc(88px + env(safe-area-inset-bottom))",
+    overflow: "hidden",
+  }}
+>
       <div
         style={{
           position: "absolute",
