@@ -250,8 +250,9 @@ export default function Hero() {
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: 8,
+          gap: 6,
           marginTop: 12,
+          width: "min(380px, 75vw)",
         }}
       >
         {slides.map((s, i) => (
@@ -260,17 +261,45 @@ export default function Hero() {
             onClick={() => setIndex(i)}
             aria-label={`Go to ${s.eyebrow} slide`}
             style={{
-              width: i === index ? 22 : 8,
-              height: 8,
-              borderRadius: 4,
+              flex: 1,
+              height: 3,
+              borderRadius: 2,
               border: "none",
               padding: 0,
               cursor: "pointer",
-              background:
-                i === index ? "var(--accent)" : "rgba(255,255,255,0.25)",
-              transition: "all 0.3s ease",
+              background: "rgba(255,255,255,0.2)",
+              overflow: "hidden",
+              position: "relative",
             }}
-          />
+          >
+            {i === index && (
+              <motion.div
+                key={slide.image}
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: AUTO_ADVANCE_MS / 1000, ease: "linear" }}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  height: "100%",
+                  background: "var(--accent)",
+                }}
+              />
+            )}
+            {i < index && (
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  height: "100%",
+                  width: "100%",
+                  background: "var(--accent)",
+                }}
+              />
+            )}
+          </button>
         ))}
       </div>
 
