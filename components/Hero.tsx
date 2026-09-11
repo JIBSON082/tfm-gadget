@@ -22,7 +22,7 @@ const slides: Slide[] = [
     eyebrow: "Power Banks",
     category: "Power Banks",
     title: "Never die again",
-    copy: "From quick top ups to laptop grade capacity, a power bank for every budget.",
+    copy: "From small top up banks to laptop size capacity, we have one for your budget.",
   },
   {
     image:
@@ -30,7 +30,7 @@ const slides: Slide[] = [
     eyebrow: "Earbuds",
     category: "Earbuds & Earphones",
     title: "Sound that fits your budget",
-    copy: "From everyday buds to noise cancelling picks, tell us what you want to spend.",
+    copy: "From everyday buds to noise cancelling ones, just tell us what you want to spend.",
   },
   {
     image:
@@ -38,7 +38,7 @@ const slides: Slide[] = [
     eyebrow: "Headphones",
     category: "Headphones & Headsets",
     title: "Studio sound, street price",
-    copy: "JBL, Bose, and more: over ear comfort without the over the top markup.",
+    copy: "JBL, Bose and more. Enjoy the comfort without paying extra just for the brand name.",
   },
   {
     image:
@@ -46,7 +46,7 @@ const slides: Slide[] = [
     eyebrow: "Speakers",
     category: "Speakers & Microphones",
     title: "Turn it up, not your wallet",
-    copy: "Portable speakers built for the party, priced for the plug.",
+    copy: "Portable speakers made for the party, priced for your pocket.",
   },
   {
     image:
@@ -54,7 +54,7 @@ const slides: Slide[] = [
     eyebrow: "Chargers & Cables",
     category: "Chargers & Cables",
     title: "The small stuff, sorted",
-    copy: "Cables, heads, and everyday essentials, never overpay for the basics again.",
+    copy: "Cables, heads and the everyday things you need. Stop overpaying for the basics.",
   },
   {
     image:
@@ -62,7 +62,7 @@ const slides: Slide[] = [
     eyebrow: "Smartwatches",
     category: "Smartwatches",
     title: "Track everything. Overspend on nothing.",
-    copy: "Itel, Oraimo, and more: smart features at a price that makes sense.",
+    copy: "Itel, Oraimo and more. Get all the smart features at a price that makes sense.",
   },
 ];
 
