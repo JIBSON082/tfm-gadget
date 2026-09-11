@@ -1,135 +1,160 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState } from "react";
 
 const badges = [
   {
-    icon: (
-      <svg viewBox="0 0 40 40" fill="none">
-        <motion.path
-          d="M4 26h4M4 26a3 3 0 106 0M10 26H24V13h-8l-4 5v8"
-          stroke="var(--accent)"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-        />
-        <motion.circle
-          cx="26" cy="26" r="3.2"
-          stroke="var(--accent)" strokeWidth="1.6"
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 380, damping: 14, delay: 0.75 }}
-        />
-        <motion.path
-          d="M24 15h6l4 5v6h-4"
-          stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-          initial={{ pathLength: 0, opacity: 0 }}
-          whileInView={{ pathLength: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        />
-        <motion.g
-          initial={{ opacity: 0, x: 6 }}
-          whileInView={{ opacity: [0, 1, 0], x: [6, -2, -10] }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, delay: 0.9, ease: "easeOut" }}
-        >
-          <path d="M0 20h4M-2 23h4" stroke="var(--accent)" strokeWidth="1.3" strokeLinecap="round" opacity="0.5" />
-        </motion.g>
-      </svg>
-    ),
-    loop: { x: [0, 5, 0] },
+    key: "delivery",
     title: "Fast delivery",
     detail: "Delivered across Lagos in days, not weeks",
-  },
-  {
     icon: (
-      <svg viewBox="0 0 40 40" fill="none">
+      <svg viewBox="0 0 48 48" fill="none">
         <motion.path
-          d="M20 5l11 4v9c0 8-5 13-11 17-6-4-11-9-11-17V9l11-4z"
-          stroke="var(--accent)" strokeWidth="1.6" strokeLinejoin="round"
+          d="M6 30V16a2 2 0 012-2h16v16"
+          stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
           initial={{ pathLength: 0 }}
           whileInView={{ pathLength: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
         />
         <motion.path
-          d="M14.5 20l4 4 7-8"
+          d="M24 20h8l6 6v6h-4"
           stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
           initial={{ pathLength: 0, opacity: 0 }}
           whileInView={{ pathLength: 1, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.85 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.55 }}
         />
-      </svg>
-    ),
-    loop: { scale: [1, 1.1, 1] },
-    title: "Genuine warranty",
-    detail: "Every item comes with cover, no exceptions",
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 40 40" fill="none">
-        <motion.path
-          d="M6 12a3 3 0 013-3h18a3 3 0 013 3v13a3 3 0 01-3 3H15l-6 5v-5H9a3 3 0 01-3-3V12z"
-          stroke="var(--accent)" strokeWidth="1.6" strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
+        <motion.g
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.85, ease: "easeOut", delay: 0.15 }}
-        />
-        {[13, 20, 27].map((cx, i) => (
+          transition={{ type: "spring", stiffness: 420, damping: 13, delay: 0.9 }}
+        >
+          <circle cx="15" cy="34" r="3.4" stroke="var(--accent)" strokeWidth="1.8" fill="var(--bg)" />
+          <circle cx="33" cy="34" r="3.4" stroke="var(--accent)" strokeWidth="1.8" fill="var(--bg)" />
+        </motion.g>
+        {[0, 1, 2].map((i) => (
           <motion.circle
-            key={cx}
-            cx={cx} cy="18.5" r="1.6"
+            key={i}
+            cx={2 + i * 3} cy="24" r="1"
             fill="var(--accent)"
-            initial={{ opacity: 0.2, y: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            animate={{ y: [0, -3, 0] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0.9, 0], x: [0, -8] }}
             transition={{
-              duration: 1,
-              delay: 0.9 + i * 0.15,
+              duration: 1.1,
               repeat: Infinity,
-              repeatDelay: 1.2,
-              ease: "easeInOut",
+              delay: 1.2 + i * 0.2,
+              ease: "easeIn",
             }}
           />
         ))}
       </svg>
     ),
-    loop: {},
-    title: "Real support",
-    detail: "Speak to an actual person on WhatsApp, any time",
   },
   {
+    key: "warranty",
+    title: "Genuine warranty",
+    detail: "Every item comes with cover, no exceptions",
     icon: (
-      <svg viewBox="0 0 40 40" fill="none">
-        <motion.rect
-          x="4" y="10" width="32" height="21" rx="3"
-          stroke="var(--accent)" strokeWidth="1.6"
+      <svg viewBox="0 0 48 48" fill="none">
+        <motion.path
+          d="M24 6l13 5v10c0 10-6 15.5-13 21-7-5.5-13-11-13-21V11l13-5z"
+          stroke="var(--accent)" strokeWidth="1.8" strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
+        />
+        <motion.circle
+          cx="24" cy="22" r="9"
+          stroke="var(--accent)" strokeWidth="1"
+          opacity="0.35"
+          initial={{ scale: 0, opacity: 0 }}
+          whileInView={{ scale: [0, 1.4, 1], opacity: [0, 0.5, 0.35] }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.85, ease: "easeOut" }}
+        />
+        <motion.path
+          d="M17.5 22.5l4.5 4.5 9-9.5"
+          stroke="var(--accent)" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round"
           initial={{ pathLength: 0, opacity: 0 }}
           whileInView={{ pathLength: 1, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+          transition={{ duration: 0.45, ease: "easeOut", delay: 0.85 }}
+        />
+      </svg>
+    ),
+  },
+  {
+    key: "support",
+    title: "Real support",
+    detail: "Speak to an actual person on WhatsApp, any time",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none">
+        <motion.path
+          d="M8 15a4 4 0 014-4h24a4 4 0 014 4v15a4 4 0 01-4 4H20l-8 6v-6h-0a4 4 0 01-4-4V15z"
+          stroke="var(--accent)" strokeWidth="1.8" strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.85, ease: "easeOut", delay: 0.15 }}
+        />
+        {[16, 24, 32].map((cx, i) => (
+          <motion.circle
+            key={cx}
+            cx={cx} cy="22" r="2"
+            fill="var(--accent)"
+            initial={{ y: 0, opacity: 0.3 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            animate={{ y: [0, -5, 0] }}
+            transition={{
+              duration: 0.9,
+              delay: 0.75 + i * 0.16,
+              repeat: Infinity,
+              repeatDelay: 1.4,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+        <motion.circle
+          cx="36" cy="10" r="4.5"
+          fill="#22c55e"
+          initial={{ scale: 0 }}
+          whileInView={{ scale: [0, 1.3, 1] }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 380, damping: 12, delay: 1.1 }}
+        />
+      </svg>
+    ),
+  },
+  {
+    key: "payment",
+    title: "Flexible payment",
+    detail: "Full payment or part payment, whichever works for you",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none">
+        <motion.rect
+          x="5" y="12" width="38" height="25" rx="4"
+          stroke="var(--accent)" strokeWidth="1.8"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.75, ease: "easeOut", delay: 0.15 }}
         />
         <motion.rect
-          x="4" y="15" width="32" height="5"
+          x="5" y="18" width="38" height="6"
           fill="var(--accent)"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           style={{ transformOrigin: "left" }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
+          transition={{ duration: 0.55, ease: "easeOut", delay: 0.6 }}
         />
         <motion.rect
-          x="8" y="24" width="9" height="3" rx="1.5"
+          x="10" y="29" width="11" height="4" rx="2"
           fill="var(--accent)"
           initial={{ scaleX: 0, opacity: 0 }}
           whileInView={{ scaleX: 1, opacity: 1 }}
@@ -137,81 +162,214 @@ const badges = [
           style={{ transformOrigin: "left" }}
           transition={{ duration: 0.4, ease: "easeOut", delay: 0.95 }}
         />
+        <motion.g
+          initial={{ opacity: 0, scale: 0.3, rotate: -30 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 300, damping: 14, delay: 1.05 }}
+        >
+          <circle cx="35" cy="31" r="6" fill="var(--bg)" stroke="var(--accent)" strokeWidth="1.6" />
+          <path d="M32.5 31l1.8 1.8L37.5 29" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </motion.g>
       </svg>
     ),
-    loop: { y: [0, -3, 0] },
-    title: "Flexible payment",
-    detail: "Full payment or part payment, whichever works for you",
   },
 ];
 
 const container = {
   hidden: {},
-  show: {
-    transition: { staggerChildren: 0.16, delayChildren: 0.1 },
-  },
+  show: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
 };
 
 const card = {
-  hidden: { opacity: 0, y: 36, rotateX: -18, scale: 0.92 },
+  hidden: { opacity: 0, y: 60, rotateX: -30, scale: 0.85 },
   show: {
     opacity: 1,
     y: 0,
     rotateX: 0,
     scale: 1,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
 const titleVariant = {
   hidden: { opacity: 0, y: 10 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut", delay: 0.55 },
-  },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut", delay: 0.6 } },
 };
 
 const detailVariant = {
   hidden: { opacity: 0, y: 10 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut", delay: 0.7 },
-  },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut", delay: 0.75 } },
 };
 
 const underline = {
   hidden: { scaleX: 0 },
-  show: {
-    scaleX: 1,
-    transition: { duration: 0.5, ease: "easeOut", delay: 0.65 },
-  },
+  show: { scaleX: 1, transition: { duration: 0.5, ease: "easeOut", delay: 0.68 } },
 };
 
-export default function TrustSection() {
-  const [tilt, setTilt] = useState<{ [k: string]: { x: number; y: number } }>({});
+function TrustCard({ badge }: { badge: (typeof badges)[number] }) {
+  const mx = useMotionValue(0.5);
+  const my = useMotionValue(0.5);
+  const rx = useSpring(useTransform(my, [0, 1], [16, -16]), { stiffness: 220, damping: 20 });
+  const ry = useSpring(useTransform(mx, [0, 1], [-16, 16]), { stiffness: 220, damping: 20 });
+  const glowX = useTransform(mx, (v) => `${v * 100}%`);
+  const glowY = useTransform(my, (v) => `${v * 100}%`);
 
-  const handleMove = (
-    e: React.MouseEvent<HTMLDivElement>,
-    key: string
-  ) => {
+  const [burst, setBurst] = useState(0);
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt((t) => ({ ...t, [key]: { x: px, y: py } }));
+    mx.set((e.clientX - rect.left) / rect.width);
+    my.set((e.clientY - rect.top) / rect.height);
   };
 
-  const resetTilt = (key: string) =>
-    setTilt((t) => ({ ...t, [key]: { x: 0, y: 0 } }));
+  const handleLeave = () => {
+    mx.set(0.5);
+    my.set(0.5);
+  };
 
+  return (
+    <motion.div
+      variants={card}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      onMouseEnter={() => setBurst((n) => n + 1)}
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.95 }}
+      style={{
+        rotateX: rx,
+        rotateY: ry,
+        position: "relative",
+        background: "rgba(255,255,255,0.03)",
+        border: "1px solid var(--surface-border)",
+        borderRadius: 18,
+        padding: "26px 20px",
+        textAlign: "center",
+        transformStyle: "preserve-3d",
+        overflow: "hidden",
+        cursor: "default",
+      }}
+    >
+      <motion.div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: useTransform(
+            [glowX, glowY],
+            ([x, y]) => `radial-gradient(circle at ${x} ${y}, rgba(63,169,255,0.16), transparent 60%)`
+          ),
+          pointerEvents: "none",
+        }}
+      />
+
+      {Array.from({ length: burst > 0 ? 6 : 0 }).map((_, i) => {
+        const angle = (i / 6) * Math.PI * 2;
+        return (
+          <motion.span
+            key={`${burst}-${i}`}
+            initial={{
+              opacity: 0.9,
+              x: 0,
+              y: 0,
+              scale: 1,
+            }}
+            animate={{
+              opacity: 0,
+              x: Math.cos(angle) * 46,
+              y: Math.sin(angle) * 46,
+              scale: 0.3,
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{
+              position: "absolute",
+              top: "38%",
+              left: "50%",
+              width: 5,
+              height: 5,
+              borderRadius: "50%",
+              background: "var(--accent)",
+              pointerEvents: "none",
+            }}
+          />
+        );
+      })}
+
+      <motion.div
+        animate={
+          badge.key === "delivery"
+            ? { x: [0, 5, 0] }
+            : badge.key === "warranty"
+            ? { scale: [1, 1.08, 1] }
+            : badge.key === "payment"
+            ? { y: [0, -4, 0] }
+            : {}
+        }
+        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          width: 44,
+          height: 44,
+          margin: "0 auto 14px",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {badge.icon}
+      </motion.div>
+
+      <motion.p
+        variants={titleVariant}
+        style={{
+          fontSize: 15,
+          fontWeight: 600,
+          color: "var(--text-primary)",
+          margin: 0,
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {badge.title}
+      </motion.p>
+
+      <motion.div
+        variants={underline}
+        style={{
+          width: 28,
+          height: 2,
+          background: "var(--accent)",
+          opacity: 0.5,
+          margin: "8px auto",
+          transformOrigin: "center",
+          borderRadius: 2,
+          position: "relative",
+          zIndex: 1,
+        }}
+      />
+
+      <motion.p
+        variants={detailVariant}
+        style={{
+          fontSize: 13,
+          color: "var(--text-muted)",
+          margin: 0,
+          lineHeight: 1.5,
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {badge.detail}
+      </motion.p>
+    </motion.div>
+  );
+}
+
+export default function TrustSection() {
   return (
     <section
       style={{
         padding: "24px 24px 80px",
         maxWidth: 1000,
         margin: "0 auto",
-        perspective: 1200,
+        perspective: 1400,
       }}
     >
       <motion.h2
@@ -241,87 +399,9 @@ export default function TrustSection() {
           gap: 20,
         }}
       >
-        {badges.map((b) => {
-          const t = tilt[b.title] || { x: 0, y: 0 };
-          return (
-            <motion.div
-              key={b.title}
-              variants={card}
-              onMouseMove={(e) => handleMove(e, b.title)}
-              onMouseLeave={() => resetTilt(b.title)}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              animate={{
-                rotateY: t.x * 16,
-                rotateX: -t.y * 16,
-              }}
-              transition={{ type: "spring", stiffness: 200, damping: 18 }}
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid var(--surface-border)",
-                borderRadius: 16,
-                padding: "24px 20px",
-                textAlign: "center",
-                transformStyle: "preserve-3d",
-                cursor: "default",
-              }}
-            >
-              <motion.div
-                animate={b.loop}
-                transition={{
-                  duration: 2.6,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  ease: "easeInOut",
-                }}
-                style={{
-                  width: 40,
-                  height: 40,
-                  margin: "0 auto 14px",
-                }}
-              >
-                {b.icon}
-              </motion.div>
-
-              <motion.p
-                variants={titleVariant}
-                style={{
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: "var(--text-primary)",
-                  margin: 0,
-                }}
-              >
-                {b.title}
-              </motion.p>
-
-              <motion.div
-                variants={underline}
-                style={{
-                  width: 28,
-                  height: 2,
-                  background: "var(--accent)",
-                  opacity: 0.5,
-                  margin: "8px auto",
-                  transformOrigin: "center",
-                  borderRadius: 2,
-                }}
-              />
-
-              <motion.p
-                variants={detailVariant}
-                style={{
-                  fontSize: 13,
-                  color: "var(--text-muted)",
-                  margin: 0,
-                  lineHeight: 1.5,
-                }}
-              >
-                {b.detail}
-              </motion.p>
-            </motion.div>
-          );
-        })}
+        {badges.map((b) => (
+          <TrustCard key={b.key} badge={b} />
+        ))}
       </motion.div>
     </section>
   );
