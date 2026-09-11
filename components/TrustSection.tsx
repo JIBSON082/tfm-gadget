@@ -6,100 +6,140 @@ import { useState } from "react";
 const badges = [
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg viewBox="0 0 40 40" fill="none">
         <motion.path
-          d="M3 16V7a1 1 0 011-1h9v10"
+          d="M4 26h4M4 26a3 3 0 106 0M10 26H24V13h-8l-4 5v8"
+          stroke="var(--accent)"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           initial={{ pathLength: 0 }}
           whileInView={{ pathLength: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+        />
+        <motion.circle
+          cx="26" cy="26" r="3.2"
+          stroke="var(--accent)" strokeWidth="1.6"
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 380, damping: 14, delay: 0.75 }}
         />
         <motion.path
-          d="M13 10h5l3 3v3h-2"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
+          d="M24 15h6l4 5v6h-4"
+          stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
         />
-        <motion.circle
-          cx="7.5" cy="17.5" r="1.8"
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
+        <motion.g
+          initial={{ opacity: 0, x: 6 }}
+          whileInView={{ opacity: [0, 1, 0], x: [6, -2, -10] }}
           viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 400, damping: 12, delay: 0.9 }}
-        />
-        <motion.circle
-          cx="17.5" cy="17.5" r="1.8"
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 400, damping: 12, delay: 1 }}
-        />
+          transition={{ duration: 0.9, delay: 0.9, ease: "easeOut" }}
+        >
+          <path d="M0 20h4M-2 23h4" stroke="var(--accent)" strokeWidth="1.3" strokeLinecap="round" opacity="0.5" />
+        </motion.g>
       </svg>
     ),
-    loop: { x: [0, 6, 0] },
+    loop: { x: [0, 5, 0] },
     title: "Fast delivery",
     detail: "Delivered across Lagos in days, not weeks",
   },
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg viewBox="0 0 40 40" fill="none">
         <motion.path
-          d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"
+          d="M20 5l11 4v9c0 8-5 13-11 17-6-4-11-9-11-17V9l11-4z"
+          stroke="var(--accent)" strokeWidth="1.6" strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
+        />
+        <motion.path
+          d="M14.5 20l4 4 7-8"
+          stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
           initial={{ pathLength: 0, opacity: 0 }}
           whileInView={{ pathLength: 1, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.85 }}
         />
       </svg>
     ),
-    loop: { scale: [1, 1.12, 1] },
+    loop: { scale: [1, 1.1, 1] },
     title: "Genuine warranty",
     detail: "Every item comes with cover, no exceptions",
   },
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg viewBox="0 0 40 40" fill="none">
         <motion.path
-          d="M21 11.5a8.38 8.38 0 01-1.9 5.4L21 21l-4.1-1.1a8.5 8.5 0 11-3.9-16.1 8.5 8.5 0 018.9 7.7z"
+          d="M6 12a3 3 0 013-3h18a3 3 0 013 3v13a3 3 0 01-3 3H15l-6 5v-5H9a3 3 0 01-3-3V12z"
+          stroke="var(--accent)" strokeWidth="1.6" strokeLinejoin="round"
           initial={{ pathLength: 0 }}
           whileInView={{ pathLength: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          transition={{ duration: 0.85, ease: "easeOut", delay: 0.15 }}
         />
+        {[13, 20, 27].map((cx, i) => (
+          <motion.circle
+            key={cx}
+            cx={cx} cy="18.5" r="1.6"
+            fill="var(--accent)"
+            initial={{ opacity: 0.2, y: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            animate={{ y: [0, -3, 0] }}
+            transition={{
+              duration: 1,
+              delay: 0.9 + i * 0.15,
+              repeat: Infinity,
+              repeatDelay: 1.2,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
       </svg>
     ),
-    loop: { rotate: [0, -8, 8, 0] },
+    loop: {},
     title: "Real support",
     detail: "Speak to an actual person on WhatsApp, any time",
   },
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <svg viewBox="0 0 40 40" fill="none">
         <motion.rect
-          x="3" y="6" width="18" height="13" rx="2"
+          x="4" y="10" width="32" height="21" rx="3"
+          stroke="var(--accent)" strokeWidth="1.6"
           initial={{ pathLength: 0, opacity: 0 }}
           whileInView={{ pathLength: 1, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
         />
-        <motion.path
-          d="M3 10h18"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
+        <motion.rect
+          x="4" y="15" width="32" height="5"
+          fill="var(--accent)"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
+          style={{ transformOrigin: "left" }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
         />
-        <motion.path
-          d="M7 15h4"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
+        <motion.rect
+          x="8" y="24" width="9" height="3" rx="1.5"
+          fill="var(--accent)"
+          initial={{ scaleX: 0, opacity: 0 }}
+          whileInView={{ scaleX: 1, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4, ease: "easeOut", delay: 0.9 }}
+          style={{ transformOrigin: "left" }}
+          transition={{ duration: 0.4, ease: "easeOut", delay: 0.95 }}
         />
       </svg>
     ),
-    loop: { y: [0, -4, 0] },
+    loop: { y: [0, -3, 0] },
     title: "Flexible payment",
     detail: "Full payment or part payment, whichever works for you",
   },
@@ -108,7 +148,7 @@ const badges = [
 const container = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.14, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.16, delayChildren: 0.1 },
   },
 };
 
@@ -120,6 +160,32 @@ const card = {
     rotateX: 0,
     scale: 1,
     transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+const titleVariant = {
+  hidden: { opacity: 0, y: 10 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut", delay: 0.55 },
+  },
+};
+
+const detailVariant = {
+  hidden: { opacity: 0, y: 10 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut", delay: 0.7 },
+  },
+};
+
+const underline = {
+  hidden: { scaleX: 0 },
+  show: {
+    scaleX: 1,
+    transition: { duration: 0.5, ease: "easeOut", delay: 0.65 },
   },
 };
 
@@ -209,14 +275,16 @@ export default function TrustSection() {
                   ease: "easeInOut",
                 }}
                 style={{
-                  width: 30,
-                  height: 30,
-                  margin: "0 auto 12px",
+                  width: 40,
+                  height: 40,
+                  margin: "0 auto 14px",
                 }}
               >
                 {b.icon}
               </motion.div>
-              <p
+
+              <motion.p
+                variants={titleVariant}
                 style={{
                   fontSize: 15,
                   fontWeight: 600,
@@ -225,17 +293,32 @@ export default function TrustSection() {
                 }}
               >
                 {b.title}
-              </p>
-              <p
+              </motion.p>
+
+              <motion.div
+                variants={underline}
+                style={{
+                  width: 28,
+                  height: 2,
+                  background: "var(--accent)",
+                  opacity: 0.5,
+                  margin: "8px auto",
+                  transformOrigin: "center",
+                  borderRadius: 2,
+                }}
+              />
+
+              <motion.p
+                variants={detailVariant}
                 style={{
                   fontSize: 13,
                   color: "var(--text-muted)",
-                  margin: "6px 0 0",
+                  margin: 0,
                   lineHeight: 1.5,
                 }}
               >
                 {b.detail}
-              </p>
+              </motion.p>
             </motion.div>
           );
         })}
