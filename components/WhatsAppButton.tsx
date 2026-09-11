@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 const WHATSAPP_NUMBER = "2348136880920";
-const DEFAULT_MESSAGE = "Hi TFM Gadget, I have a question about your products.";
+const DEFAULT_MESSAGE = "Hi TFM Gadget, I'd like to purchase one of your gadgets.";
 
 export default function WhatsAppButton() {
   const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
