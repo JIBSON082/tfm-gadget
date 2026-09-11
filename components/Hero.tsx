@@ -84,11 +84,6 @@ export default function Hero() {
     setIndex((i) => (i - 1 + slides.length) % slides.length);
   }, []);
 
-  const goTo = useCallback((i: number) => {
-    setDirection(i > index ? 1 : -1);
-    setIndex(i);
-  }, [index]);
-
   useEffect(() => {
     const timer = setInterval(next, AUTO_ADVANCE_MS);
     return () => clearInterval(timer);
@@ -319,63 +314,6 @@ export default function Hero() {
         >
           ›
         </button>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: 6,
-          marginTop: 12,
-          width: "min(380px, 75vw)",
-        }}
-      >
-        {slides.map((s, i) => (
-          <button
-            key={s.eyebrow}
-            onClick={() => goTo(i)}
-            aria-label={`Go to ${s.eyebrow} slide`}
-            style={{
-              flex: 1,
-              height: 3,
-              borderRadius: 2,
-              border: "none",
-              padding: 0,
-              cursor: "pointer",
-              background: "rgba(255,255,255,0.2)",
-              overflow: "hidden",
-              position: "relative",
-            }}
-          >
-            {i === index && (
-              <motion.div
-                key={slide.image}
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: AUTO_ADVANCE_MS / 1000, ease: "linear" }}
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  height: "100%",
-                  background: "var(--accent)",
-                }}
-              />
-            )}
-            {i < index && (
-              <div
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  height: "100%",
-                  width: "100%",
-                  background: "var(--accent)",
-                }}
-              />
-            )}
-          </button>
-        ))}
       </div>
 
       <motion.div
