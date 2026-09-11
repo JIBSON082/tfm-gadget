@@ -246,6 +246,34 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 8,
+          marginTop: 12,
+        }}
+      >
+        {slides.map((s, i) => (
+          <button
+            key={s.eyebrow}
+            onClick={() => setIndex(i)}
+            aria-label={`Go to ${s.eyebrow} slide`}
+            style={{
+              width: i === index ? 22 : 8,
+              height: 8,
+              borderRadius: 4,
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+              background:
+                i === index ? "var(--accent)" : "rgba(255,255,255,0.25)",
+              transition: "all 0.3s ease",
+            }}
+          />
+        ))}
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
