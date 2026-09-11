@@ -1,6 +1,28 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { getAIResponse } from "@/data/aiEngine";
+import type { Product } from "@/data/products";
+import { useCart } from "@/components/CartContext";
+
+interface Message {
+  id: string;
+  role: "user" | "ai";
+  text: string;
+  products?: Product[];
+  finderLink?: string;
+}
+
+const STORAGE_KEY = "tfm-ai-chat";
+const currency = (n: number) => `₦${n.toLocaleString("en-NG")}`;
+
+const GREETING: Message = {
+  id: "greeting",
+  role: "ai",
+  text: "Hi, I'm TFM AI. Ask me about any product, a budget, a category, or a brand, and I'll show you what fits.",
+};
 
 export default function AIPanel({
   open,
@@ -9,6 +31,52 @@ export default function AIPanel({
   open: boolean;
   onClose: () => void;
 }) {
+  const [messages, setMessages] = useState<Message[]>([GREETING]);
+  const [input, setInput] = useState("");
+  const [hydrated, setHydrated] = useState(false);
+  const { addItem } = useCart();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) setMessages(parsed);
+      }
+    } catch {
+      // ignore corrupt storage
+    }
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  }, [messages, hydrated]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, open]);
+
+  function handleSend() {
+    const text = input.trim();
+    if (!text) return;
+
+    const userMsg: Message = { id: crypto.randomUUID(), role: "user", text };
+    const ai = getAIResponse(text);
+    const aiMsg: Message = {
+      id: crypto.randomUUID(),
+      role: "ai",
+      text: ai.reply,
+      products: ai.products,
+      finderLink: ai.finderLink,
+    };
+
+    setMessages((prev) => [...prev, userMsg, aiMsg]);
+    setInput("");
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -40,11 +108,11 @@ export default function AIPanel({
               borderTop: "1px solid var(--surface-border)",
               borderTopLeftRadius: 24,
               borderTopRightRadius: 24,
-              padding: "24px 24px 32px",
-              maxHeight: "75vh",
+              padding: "20px 20px 20px",
+              height: "80vh",
               display: "flex",
               flexDirection: "column",
-              gap: 16,
+              gap: 14,
             }}
           >
             <div
@@ -78,33 +146,139 @@ export default function AIPanel({
             </div>
 
             <div
+              ref={scrollRef}
               style={{
                 flex: 1,
+                overflowY: "auto",
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "var(--text-muted)",
-                fontSize: 15,
-                textAlign: "center",
-                padding: "20px 0",
+                flexDirection: "column",
+                gap: 12,
+                paddingRight: 4,
               }}
             >
-              Ask me anything about TFM products — coming soon.
+              {messages.map((m) => (
+                <div
+                  key={m.id}
+                  style={{
+                    alignSelf: m.role === "user" ? "flex-end" : "flex-start",
+                    maxWidth: "85%",
+                  }}
+                >
+                  <div
+                    style={{
+                      background:
+                        m.role === "user" ? "var(--accent)" : "rgba(255,255,255,0.05)",
+                      color: m.role === "user" ? "#000" : "var(--text-primary)",
+                      borderRadius: 14,
+                      padding: "10px 14px",
+                      fontSize: 14,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {m.text}
+                  </div>
+
+                  {m.products && m.products.length > 0 && (
+                    <div
+                      style={{
+                        marginTop: 8,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 6,
+                      }}
+                    >
+                      {m.products.map((p) => (
+                        <div
+                          key={p.id}
+                          style={{
+                            background: "var(--bg)",
+                            border: "1px solid var(--surface-border)",
+                            borderRadius: 12,
+                            padding: "10px 12px",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            gap: 10,
+                          }}
+                        >
+                          <div>
+                            <p style={{ fontSize: 12.5, color: "var(--text-primary)", margin: 0 }}>
+                              {p.name}
+                            </p>
+                            <span style={{ fontSize: 11, color: "var(--accent)" }}>
+                              {p.brand} · {currency(p.price)}
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => addItem(p)}
+                            style={{
+                              background: "var(--surface)",
+                              border: "1px solid var(--surface-border)",
+                              borderRadius: 999,
+                              padding: "5px 10px",
+                              color: "var(--text-primary)",
+                              fontSize: 11,
+                              fontWeight: 600,
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            Add
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {m.finderLink && (
+                    <Link
+                      href={m.finderLink}
+                      onClick={onClose}
+                      style={{
+                        display: "inline-block",
+                        marginTop: 8,
+                        fontSize: 12.5,
+                        color: "var(--accent)",
+                      }}
+                    >
+                      See all in Smart Finder →
+                    </Link>
+                  )}
+                </div>
+              ))}
             </div>
 
-            <input
-              disabled
-              placeholder="Ask about a product..."
-              style={{
-                width: "100%",
-                padding: "14px 16px",
-                borderRadius: 12,
-                border: "1px solid var(--surface-border)",
-                background: "var(--bg)",
-                color: "var(--text-muted)",
-                fontSize: 15,
-              }}
-            />
+            <div style={{ display: "flex", gap: 8 }}>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                placeholder="Ask about a product..."
+                style={{
+                  flex: 1,
+                  padding: "14px 16px",
+                  borderRadius: 12,
+                  border: "1px solid var(--surface-border)",
+                  background: "var(--bg)",
+                  color: "var(--text-primary)",
+                  fontSize: 15,
+                  outline: "none",
+                }}
+              />
+              <button
+                onClick={handleSend}
+                style={{
+                  background: "var(--accent)",
+                  border: "none",
+                  borderRadius: 12,
+                  padding: "0 18px",
+                  color: "#000",
+                  fontWeight: 600,
+                  fontSize: 14,
+                }}
+              >
+                Send
+              </button>
+            </div>
           </motion.div>
         </>
       )}
