@@ -22,15 +22,15 @@ const slides: Slide[] = [
     eyebrow: "Power Banks",
     category: "Power Banks",
     title: "Never run out of power.",
-    copy: "From everyday power banks to high-capacity options, find the right one for your phone, your routine and your budget.",
+    copy: "Reliable power banks for everyday use, at prices that make sense.",
   },
   {
     image:
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523797/lucid-origin_A_wireless_earbuds_charging_case_fully_closed_with_no_visible_seam_or_hinge_line-3_1_yexaqx.jpg",
     eyebrow: "Earbuds",
     category: "Earbuds & Earphones",
-    title: "Great sound, without the heavy price tag.",
-    copy: "Whether it is for calls, music, workouts or everyday use, get earbuds that deliver quality without overspending.",
+    title: "Great sound. Better price.",
+    copy: "Quality earbuds for calls, music and everything in between.",
   },
   {
     image:
@@ -38,23 +38,23 @@ const slides: Slide[] = [
     eyebrow: "Headphones",
     category: "Headphones & Headsets",
     title: "Premium sound. Better value.",
-    copy: "JBL, Bose and more. Enjoy great sound and lasting comfort without paying more simply for the brand.",
+    copy: "Enjoy great sound and comfort without overspending.",
   },
   {
     image:
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_cylindrical_portable_bluetooth_speaker_floating_at_a_dynamic_diagonal_angle_in-1_1_bgipyq.jpg",
     eyebrow: "Speakers",
     category: "Speakers & Microphones",
-    title: "Bring the sound wherever you go.",
-    copy: "From personal listening to weekend hangouts, find portable speakers with the sound and battery life to keep up.",
+    title: "Make every moment louder.",
+    copy: "Portable speakers with great sound at the right price.",
   },
   {
     image:
       "https://res.cloudinary.com/dx3k7hbnc/image/upload/v1788523796/lucid-origin_A_braided_charging_cable_neatly_coiled_and_secured_inside_a_small_open_zippered_-0_1_sdqdtp.jpg",
     eyebrow: "Chargers & Cables",
     category: "Chargers & Cables",
-    title: "The essentials, done right.",
-    copy: "Quality chargers, cables and everyday accessories you can rely on at prices that make sense.",
+    title: "Get the essentials right.",
+    copy: "Quality chargers and cables you can count on.",
   },
   {
     image:
@@ -62,7 +62,7 @@ const slides: Slide[] = [
     eyebrow: "Smartwatches",
     category: "Smartwatches",
     title: "Track more. Spend less.",
-    copy: "Itel, Oraimo and more. Stay connected, monitor your activity and enjoy smart features without stretching your budget.",
+    copy: "Smart features, trusted brands and prices that make sense.",
   },
 ];
 
