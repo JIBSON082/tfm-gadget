@@ -77,6 +77,15 @@ export default function AIPanel({
     setInput("");
   }
 
+  function handleClearChat() {
+    setMessages([GREETING]);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore storage errors
+    }
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -132,17 +141,36 @@ export default function AIPanel({
               >
                 TFM AI
               </span>
-              <button
-                onClick={onClose}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "var(--text-muted)",
-                  fontSize: 24,
-                }}
-              >
-                ×
-              </button>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <button
+                  onClick={handleClearChat}
+                  disabled={messages.length <= 1}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: messages.length <= 1 ? "var(--surface-border)" : "var(--text-muted)",
+                    fontSize: 13,
+                    fontWeight: 500,
+                    cursor: messages.length <= 1 ? "default" : "pointer",
+                    padding: "4px 0",
+                  }}
+                >
+                  Clear chat
+                </button>
+                <button
+                  onClick={onClose}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "var(--text-muted)",
+                    fontSize: 24,
+                    lineHeight: 1,
+                  }}
+                >
+                  ×
+                </button>
+              </div>
             </div>
 
             <div
