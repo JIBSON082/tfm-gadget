@@ -67,26 +67,39 @@ const slides: Slide[] = [
 ];
 
 const AUTO_ADVANCE_MS = 4500;
+const SWIPE_THRESHOLD = 50;
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
   const [aiOpen, setAiOpen] = useState(false);
+  const [direction, setDirection] = useState<1 | -1>(1);
 
   const next = useCallback(() => {
+    setDirection(1);
     setIndex((i) => (i + 1) % slides.length);
   }, []);
+
+  const prev = useCallback(() => {
+    setDirection(-1);
+    setIndex((i) => (i - 1 + slides.length) % slides.length);
+  }, []);
+
+  const goTo = useCallback((i: number) => {
+    setDirection(i > index ? 1 : -1);
+    setIndex(i);
+  }, [index]);
 
   useEffect(() => {
     const timer = setInterval(next, AUTO_ADVANCE_MS);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [next, index]);
 
   const slide = slides[index];
 
   const imageVariants = {
-    enter: { rotateY: 90, opacity: 0, scale: 0.85 },
+    enter: (dir: 1 | -1) => ({ rotateY: dir === 1 ? 90 : -90, opacity: 0, scale: 0.85 }),
     center: { rotateY: 0, opacity: 1, scale: 1 },
-    exit: { rotateY: -90, opacity: 0, scale: 0.85 },
+    exit: (dir: 1 | -1) => ({ rotateY: dir === 1 ? -90 : 90, opacity: 0, scale: 0.85 }),
   };
 
   const textVariants = {
@@ -208,14 +221,47 @@ export default function Hero() {
           justifyContent: "center",
         }}
       >
-        <AnimatePresence mode="wait">
+        <button
+          onClick={prev}
+          aria-label="Previous slide"
+          style={{
+            position: "absolute",
+            left: -8,
+            top: "50%",
+            transform: "translateY(-50%)",
+            zIndex: 10,
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            border: "none",
+            background: "rgba(255,255,255,0.08)",
+            color: "var(--text-primary)",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 18,
+          }}
+        >
+          ‹
+        </button>
+
+        <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={slide.image}
+            custom={direction}
             variants={imageVariants}
             initial="enter"
             animate="center"
             exit="exit"
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.6}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -SWIPE_THRESHOLD) next();
+              else if (info.offset.x > SWIPE_THRESHOLD) prev();
+            }}
             style={{
               maskImage:
                 "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
@@ -226,6 +272,8 @@ export default function Hero() {
               justifyContent: "center",
               width: "100%",
               height: "100%",
+              cursor: "grab",
+              touchAction: "pan-y",
             }}
           >
             <Image
@@ -234,16 +282,43 @@ export default function Hero() {
               width={800}
               height={800}
               priority={index === 0}
+              draggable={false}
               style={{
                 width: "auto",
                 height: "auto",
                 maxWidth: "100%",
                 maxHeight: "100%",
                 display: "block",
+                pointerEvents: "none",
               }}
             />
           </motion.div>
         </AnimatePresence>
+
+        <button
+          onClick={next}
+          aria-label="Next slide"
+          style={{
+            position: "absolute",
+            right: -8,
+            top: "50%",
+            transform: "translateY(-50%)",
+            zIndex: 10,
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            border: "none",
+            background: "rgba(255,255,255,0.08)",
+            color: "var(--text-primary)",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 18,
+          }}
+        >
+          ›
+        </button>
       </div>
 
       <div
@@ -258,7 +333,7 @@ export default function Hero() {
         {slides.map((s, i) => (
           <button
             key={s.eyebrow}
-            onClick={() => setIndex(i)}
+            onClick={() => goTo(i)}
             aria-label={`Go to ${s.eyebrow} slide`}
             style={{
               flex: 1,
