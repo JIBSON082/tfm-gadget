@@ -104,27 +104,21 @@ export default function Hero() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        padding: "84px 24px 40px",
+        padding: "84px 24px 16px",
         overflow: "hidden",
-        background: `
-          radial-gradient(
-            ellipse 80% 60% at 50% 55%,
-            rgba(0, 180, 255, 0.13) 0%,
-            rgba(0, 120, 255, 0.05) 40%,
-            transparent 70%
-          ),
-          #000000
-        `,
       }}
     >
-      {/* Soft vignette */}
       <div
         style={{
           position: "absolute",
-          inset: 0,
-          boxShadow: "inset 0 0 140px 50px rgba(0,0,0,0.7)",
+          top: "50%",
+          left: "50%",
+          width: 700,
+          height: 700,
+          background:
+            "radial-gradient(circle, rgba(61,217,255,0.05) 0%, transparent 70%)",
+          transform: "translate(-50%, -50%)",
           pointerEvents: "none",
-          zIndex: 0,
         }}
       />
 
@@ -139,8 +133,6 @@ export default function Hero() {
           letterSpacing: "-0.01em",
           marginBottom: 18,
           textAlign: "center",
-          position: "relative",
-          zIndex: 1,
         }}
       >
         Lagos's best plug
@@ -153,8 +145,6 @@ export default function Hero() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          position: "relative",
-          zIndex: 1,
         }}
       >
         <AnimatePresence mode="wait">
@@ -206,18 +196,16 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
-      {/* Product with float + soft reflection */}
-      <div
+     <div
         style={{
           perspective: 1200,
           width: "min(380px, 75vw)",
           height: 300,
-          marginTop: 36,
+          marginTop: 28,
           position: "relative",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          zIndex: 1,
         }}
       >
         <AnimatePresence mode="wait">
@@ -229,112 +217,42 @@ export default function Hero() {
             exit="exit"
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={{
+              maskImage:
+                "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 50% 50% at center, black 20%, transparent 85%)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               width: "100%",
               height: "100%",
-              position: "relative",
             }}
           >
-            {/* Soft reflection */}
-            <div
+            <Image
+              src={slide.image}
+              alt={slide.eyebrow}
+              width={800}
+              height={800}
+              priority={index === 0}
               style={{
-                position: "absolute",
-                bottom: -18,
-                left: "50%",
-                transform: "translateX(-50%) scaleY(-1)",
-                width: "70%",
-                height: "28%",
-                opacity: 0.22,
-                filter: "blur(14px)",
-                maskImage:
-                  "linear-gradient(to bottom, rgba(0,0,0,0.45), transparent 75%)",
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, rgba(0,0,0,0.45), transparent 75%)",
-                pointerEvents: "none",
+                width: "auto",
+                height: "auto",
+                maxWidth: "100%",
+                maxHeight: "100%",
+                display: "block",
               }}
-            >
-              <Image
-                src={slide.image}
-                alt=""
-                width={800}
-                height={800}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                }}
-              />
-            </div>
-
-            {/* Main product with gentle float */}
-            <motion.div
-              animate={{ y: [0, -9, 0] }}
-              transition={{
-                duration: 5.5,
-                ease: "easeInOut",
-                repeat: Infinity,
-              }}
-              style={{
-                position: "relative",
-                zIndex: 2,
-                filter: "drop-shadow(0 0 40px rgba(0, 200, 255, 0.18))",
-              }}
-            >
-              <Image
-                src={slide.image}
-                alt={slide.eyebrow}
-                width={800}
-                height={800}
-                priority={index === 0}
-                style={{
-                  width: "auto",
-                  height: "auto",
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  display: "block",
-                }}
-              />
-            </motion.div>
+            />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* CTAs */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        style={{ marginTop: 40, position: "relative", zIndex: 1 }}
+        style={{ marginTop: 16 }}
       >
         <CTAPair category={slide.category} onAskAI={() => setAiOpen(true)} />
-      </motion.div>
-
-      {/* Thin modern trust line */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-        style={{
-          marginTop: 28,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 18,
-          flexWrap: "wrap",
-          fontSize: 13,
-          color: "rgba(255,255,255,0.45)",
-          letterSpacing: "0.01em",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        <span>Fast Lagos delivery</span>
-        <span style={{ opacity: 0.35 }}>•</span>
-        <span>Warranty included</span>
-        <span style={{ opacity: 0.35 }}>•</span>
-        <span>Real WhatsApp support</span>
       </motion.div>
 
       <AIPanel open={aiOpen} onClose={() => setAiOpen(false)} />
