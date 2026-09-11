@@ -123,20 +123,22 @@ export default function Hero() {
       />
 
       <motion.p
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        style={{
-          color: "var(--text-muted)",
-          fontSize: 19,
-          fontWeight: 600,
-          letterSpacing: "-0.01em",
-          marginBottom: 18,
-          textAlign: "center",
-        }}
-      >
-        Quality gadgets. Better prices.
-      </motion.p>
+  initial={{ opacity: 0, y: 12 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: 0.1 }}
+  style={{
+    fontSize: 16,
+    fontWeight: 700,
+    letterSpacing: "0.02em",
+    marginBottom: 18,
+    textAlign: "center",
+  }}
+>
+  <span style={{ color: "var(--text-primary)" }}>Quality gadgets.</span>{" "}
+  <span style={{ color: "var(--text-muted)", fontWeight: 400 }}>
+    Better prices.
+  </span>
+</motion.p>
 
       <div
         style={{
