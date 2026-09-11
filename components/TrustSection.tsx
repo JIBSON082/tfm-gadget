@@ -4,24 +4,45 @@ import { motion } from "framer-motion";
 
 const badges = [
   {
-    icon: "🚚",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 16V7a1 1 0 011-1h9v10" />
+        <path d="M13 10h5l3 3v3h-2" />
+        <circle cx="7.5" cy="17.5" r="1.8" />
+        <circle cx="17.5" cy="17.5" r="1.8" />
+      </svg>
+    ),
     title: "Fast delivery",
-    detail: "Across Lagos, in days not weeks",
+    detail: "Delivered across Lagos in days, not weeks",
   },
   {
-    icon: "🛡️",
-    title: "Warranty included",
-    detail: "On every item we sell",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z" />
+      </svg>
+    ),
+    title: "Genuine warranty",
+    detail: "Every item comes with cover, no exceptions",
   },
   {
-    icon: "💬",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 01-1.9 5.4L21 21l-4.1-1.1a8.5 8.5 0 11-3.9-16.1 8.5 8.5 0 018.9 7.7z" />
+      </svg>
+    ),
     title: "Real support",
-    detail: "A real person on WhatsApp",
+    detail: "Speak to an actual person on WhatsApp, any time",
   },
   {
-    icon: "✅",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="6" width="18" height="13" rx="2" />
+        <path d="M3 10h18" />
+        <path d="M7 15h4" />
+      </svg>
+    ),
     title: "Flexible payment",
-    detail: "We work with your budget",
+    detail: "Full payment or part payment, whichever works for you",
   },
 ];
 
@@ -34,6 +55,22 @@ export default function TrustSection() {
         margin: "0 auto",
       }}
     >
+      <motion.h2
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-10% 0px" }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          fontSize: 22,
+          fontWeight: 600,
+          color: "var(--text-primary)",
+          textAlign: "center",
+          margin: "0 0 24px",
+        }}
+      >
+        Why buy from TFM
+      </motion.h2>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -56,7 +93,15 @@ export default function TrustSection() {
               textAlign: "center",
             }}
           >
-            <div style={{ fontSize: 26, marginBottom: 10 }}>{b.icon}</div>
+            <div
+              style={{
+                width: 30,
+                height: 30,
+                margin: "0 auto 12px",
+              }}
+            >
+              {b.icon}
+            </div>
             <p
               style={{
                 fontSize: 15,
