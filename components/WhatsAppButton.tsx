@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import { motion } from "framer-motion";
 
@@ -33,9 +33,18 @@ export default function WhatsAppButton() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        boxShadow: "0 0 12px rgba(37, 211, 102, 0.5)",
       }}
     >
+      <motion.span
+        animate={{ scale: [1, 1.3], opacity: [0.3, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          background: "#25D366",
+        }}
+      />
       <svg
         width="24"
         height="24"
