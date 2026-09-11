@@ -123,22 +123,20 @@ export default function Hero() {
       />
 
       <motion.p
-  initial={{ opacity: 0, y: 12 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: 0.1 }}
-  style={{
-    fontSize: 16,
-    fontWeight: 700,
-    letterSpacing: "0.02em",
-    marginBottom: 18,
-    textAlign: "center",
-  }}
->
-  <span style={{ color: "var(--text-primary)" }}>Quality gadgets.</span>{" "}
-  <span style={{ color: "var(--text-muted)", fontWeight: 400 }}>
-    Better prices.
-  </span>
-</motion.p>
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        style={{
+          fontSize: 20,
+          fontWeight: 800,
+          letterSpacing: "-0.015em",
+          color: "var(--text-primary)",
+          marginBottom: 18,
+          textAlign: "center",
+        }}
+      >
+        Quality gadgets. Better prices.
+      </motion.p>
 
       <div
         style={{
@@ -171,14 +169,14 @@ export default function Hero() {
             </span>
             <h1
               style={{
-                fontSize: "clamp(2rem, 5.5vw, 3.6rem)",
+                fontSize: "clamp(1.6rem, 4.5vw, 2.7rem)",
                 marginTop: 10,
                 maxWidth: 780,
                 color: "var(--text-primary)",
                 fontFamily: "var(--font-display)",
-                fontWeight: 600,
-                letterSpacing: "-0.02em",
-                lineHeight: 1.1,
+                fontWeight: 800,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.08,
               }}
             >
               {slide.title}
